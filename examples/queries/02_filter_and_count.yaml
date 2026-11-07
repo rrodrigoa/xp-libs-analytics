@@ -1,0 +1,15 @@
+# Example 02: Filter a dimension and count non-null numeric samples.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /region
+  op: eq
+  value: west
+aggregations:
+- op: count
+  as: rows
+- op: count_non_null
+  field: /value
+  as: observed

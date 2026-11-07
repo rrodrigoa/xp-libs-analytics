@@ -1,0 +1,11 @@
+# Whole-value wildcard pattern, normalized case-insensitively.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: ilike
+  value: '%peter%'
+aggregations:
+- op: count
+  as: events

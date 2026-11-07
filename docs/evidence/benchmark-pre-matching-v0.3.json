@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-11-07T01:06:58.722102+00:00",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14",
+  "cpu": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+  "logical_cpus": 24,
+  "total_memory_bytes": 68137205760,
+  "execution": "trusted in-process SDK; full parse/type/cost planning included in query latency",
+  "benchmarks": [
+    {
+      "rows": 1000,
+      "query": "count",
+      "repeats": 7,
+      "ingestion_ms": 12.867699842900038,
+      "p50_ms": 1.5192998107522726,
+      "p95_ms": 206.7030998878181,
+      "peak_rss_bytes": 64294912,
+      "additional_peak_rss_bytes": 22614016
+    },
+    {
+      "rows": 1000,
+      "query": "grouped",
+      "repeats": 7,
+      "ingestion_ms": 12.867699842900038,
+      "p50_ms": 4.211900057271123,
+      "p95_ms": 6.783099845051765,
+      "peak_rss_bytes": 68722688,
+      "additional_peak_rss_bytes": 27041792
+    },
+    {
+      "rows": 10000,
+      "query": "count",
+      "repeats": 7,
+      "ingestion_ms": 65.99720008671284,
+      "p50_ms": 11.103900149464607,
+      "p95_ms": 18.619599984958768,
+      "peak_rss_bytes": 81739776,
+      "additional_peak_rss_bytes": 12849152
+    },
+    {
+      "rows": 10000,
+      "query": "grouped",
+      "repeats": 7,
+      "ingestion_ms": 65.99720008671284,
+      "p50_ms": 20.261199912056327,
+      "p95_ms": 27.288699988275766,
+      "peak_rss_bytes": 86048768,
+      "additional_peak_rss_bytes": 17158144
+    },
+    {
+      "rows": 100000,
+      "query": "count",
+      "repeats": 7,
+      "ingestion_ms": 986.3189999014139,
+      "p50_ms": 268.4035999700427,
+      "p95_ms": 321.4677998330444,
+      "peak_rss_bytes": 207749120,
+      "additional_peak_rss_bytes": 123338752
+    },
+    {
+      "rows": 100000,
+      "query": "grouped",
+      "repeats": 7,
+      "ingestion_ms": 986.3189999014139,
+      "p50_ms": 386.8524997960776,
+      "p95_ms": 410.33510002307594,
+      "peak_rss_bytes": 236343296,
+      "additional_peak_rss_bytes": 151932928
+    }
+  ]
+}

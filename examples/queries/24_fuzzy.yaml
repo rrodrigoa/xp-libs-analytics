@@ -1,0 +1,17 @@
+# Exhaustive ratio similarity >=85, not identity confidence.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: fuzzy
+  value: Peter
+  algorithm: ratio
+  min_score: 85
+  normalization:
+    case_sensitive: false
+    unicode: nfkc
+    trim: true
+aggregations:
+- op: count
+  as: events

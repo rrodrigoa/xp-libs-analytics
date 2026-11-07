@@ -1,0 +1,1061 @@
+{
+  "example": "01_count_all.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 12
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {},
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.324832Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "1a0debc5bbec48c4b4280c18b6522f7e",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "02_filter_and_count.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      },
+      {
+        "name": "observed",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 6,
+        "observed": 5
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 6,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.706496Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "d1fc67c6e2844c46af1a85d993b481d9",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "03_group_stats_and_topk.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "avg_value",
+        "type": "float64"
+      },
+      {
+        "name": "p95_value",
+        "type": "float64"
+      },
+      {
+        "name": "rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "region": "north",
+        "avg_value": 96.0,
+        "p95_value": 182.39999999999998,
+        "rows": 3,
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "region": "east",
+        "avg_value": 72.66666666666667,
+        "p95_value": 142.6,
+        "rows": 3,
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "region": "west",
+        "avg_value": 59.1,
+        "p95_value": 109.39999999999999,
+        "rows": 6,
+        "group_key_status": {
+          "region": "present"
+        }
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.717457Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "eb2d75e69c6249b382c23c34ef89c07e",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "04_nested_or_predicates.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "selected_rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "selected_rows": 7
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 7,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.728173Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "f711b4c20e1f45b187dfceb0f806ff12",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "05_is_missing.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "missing_rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "missing_rows": 1
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 1,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.732751Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "e6b9e42295b2431c8e3106495bf9a37a",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "06_missing_vs_null.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      },
+      {
+        "name": "missing_values",
+        "type": "int64"
+      },
+      {
+        "name": "null_values",
+        "type": "int64"
+      },
+      {
+        "name": "valid_values",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 12,
+        "missing_values": 1,
+        "null_values": 1,
+        "valid_values": 10
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.736474Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "a1f92d61b8d94c45bb21f01941aa9fd8",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "07_conditional_aggregation.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "errors",
+        "type": "int64"
+      },
+      {
+        "name": "avg_value_during_errors",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "errors": 4,
+        "avg_value_during_errors": 140.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.741302Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "ca527a090f914ef7befd72fe6c7eaadc",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "08_ratio_if.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "fraction_high",
+        "type": "float64"
+      },
+      {
+        "name": "valid_samples",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "fraction_high": 0.3,
+        "valid_samples": 10
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.747174Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "9bcf9a1762e34896908e9d54543fd350",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "09_tumbling_window.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "window_start",
+        "type": "datetime"
+      },
+      {
+        "name": "events",
+        "type": "int64"
+      },
+      {
+        "name": "window_end",
+        "type": "datetime"
+      }
+    ],
+    "rows": [
+      {
+        "window_start": "2026-11-06T00:00:00Z",
+        "events": 5,
+        "window_end": "2026-11-06T00:05:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:05:00Z",
+        "events": 3,
+        "window_end": "2026-11-06T00:10:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:10:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:15:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:15:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:20:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:20:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:25:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:25:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:30:00Z"
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": {
+        "start": "2026-11-06T00:00:00Z",
+        "end": "2026-11-06T01:00:00Z"
+      },
+      "field_quality": {
+        "/observed_at": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.754179Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "f728e0a282a94a20b72671e8f017350e",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "10_sliding_window.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "window_start",
+        "type": "datetime"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "events",
+        "type": "int64"
+      },
+      {
+        "name": "p99_value",
+        "type": "float64"
+      },
+      {
+        "name": "window_end",
+        "type": "datetime"
+      }
+    ],
+    "rows": [
+      {
+        "window_start": "2026-11-05T23:57:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:02:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-05T23:58:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:03:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-05T23:59:00Z",
+        "region": "west",
+        "events": 3,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:04:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:00:00Z",
+        "region": "west",
+        "events": 3,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:05:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:01:00Z",
+        "region": "east",
+        "events": 2,
+        "p99_value": 151.95999999999998,
+        "window_end": "2026-11-06T00:06:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:01:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 114.0,
+        "window_end": "2026-11-06T00:06:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:02:00Z",
+        "region": "east",
+        "events": 2,
+        "p99_value": 151.95999999999998,
+        "window_end": "2026-11-06T00:07:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:03:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 75.0,
+        "window_end": "2026-11-06T00:08:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:04:00Z",
+        "region": "north",
+        "events": 2,
+        "p99_value": 0.0,
+        "window_end": "2026-11-06T00:09:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": {
+        "start": "2026-11-06T00:00:00Z",
+        "end": "2026-11-06T01:00:00Z"
+      },
+      "field_quality": {
+        "/observed_at": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": true,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.765343Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "f9bd554ee13e4025b568feabf6fb1866",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "11_explicit_cast.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "avg_value",
+        "type": "float64"
+      },
+      {
+        "name": "stdev",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "avg_value": 70.55,
+        "stdev": 66.84578022084366
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.773318Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "29860b3f292c41d7b9273aada4c9890f",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "12_text_range_distinct.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "unique_tags",
+        "type": "int64"
+      },
+      {
+        "name": "min_value",
+        "type": "float64"
+      },
+      {
+        "name": "max_value",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "unique_tags": 3,
+        "min_value": 3.5,
+        "max_value": 91.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 6,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/tag": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.778498Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "c154caec762f441aba8fad274b7b556e",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "13_summary_statistics.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "total",
+        "type": "float64"
+      },
+      {
+        "name": "var",
+        "type": "float64"
+      },
+      {
+        "name": "median",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "total": 705.5,
+        "var": 4468.358333333334,
+        "median": 62.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.784862Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "759a100ec6c14d339b0361529c1ebc31",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "14_nested_and_not.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 12
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.791227Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "5db89dcf3f1443bea780864f42e317ac",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "15_conditional_sum.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "error_total",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "error_total": 420.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.797928Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "a7aa0604bca241d68d3030a9412aac25",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "16_mixed_types_cast.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      },
+      {
+        "name": "avg_metric",
+        "type": "float64"
+      },
+      {
+        "name": "missing_metric",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 4,
+        "avg_metric": 7.25,
+        "missing_metric": 1
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 4,
+      "matched_rows": 4,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/metric": {
+          "present": 3,
+          "missing": 1,
+          "null": 1,
+          "valid": 2,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.802081Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "41c91452461045baaed36ef588ae58b1",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "17_relative_last_hour.yaml",
+  "result": {
+    "status": "NO_DATA",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 0,
+      "resolved_time_range": {
+        "start": "2026-11-06T20:01:45.806081Z",
+        "end": "2026-11-06T21:01:45.806081Z"
+      },
+      "field_quality": {
+        "/observed_at": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-06T21:01:45.806081Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "690f317254c9405184d05c027304f03d",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}

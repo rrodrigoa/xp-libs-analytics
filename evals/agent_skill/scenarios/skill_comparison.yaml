@@ -1,0 +1,99 @@
+scenarios:
+- id: comparison-sales-aggregate-001
+  category: skill_comparison
+  description: For completed purchases on 2026-11-06 UTC, total amount per region,
+    excluding other statuses and dates.
+  fixture: sales.jsonl
+  user_prompt: For completed purchases on 2026-11-06 UTC, total amount per region,
+    excluding other statuses and dates.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T00:00:00Z'
+        end: '2026-11-07T00:00:00Z'
+      filters:
+      - field: /status
+        op: eq
+        value: completed
+      group_by:
+      - field: /region
+        as: region
+      aggregations:
+      - op: sum
+        field: /amount
+        as: total
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: comparison-aggregate-count
+  category: skill_comparison
+  description: Count all records. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: metric
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: comparison-aggregate-count-non-null
+  category: skill_comparison
+  description: Count valid value observations. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count valid value observations. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count_non_null
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300

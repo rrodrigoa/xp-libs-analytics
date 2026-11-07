@@ -1,0 +1,5 @@
+{"kind": "created", "entity": "a", "flag": true, "text": "a.*é"}
+{"kind": "updated", "entity": "a", "flag": false, "text": "Alpha"}
+{"kind": "created", "entity": "b", "text": "alphaé"}
+{"kind": "deleted", "text": null}
+{}

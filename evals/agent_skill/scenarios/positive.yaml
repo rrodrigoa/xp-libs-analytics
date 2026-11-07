@@ -1,0 +1,1584 @@
+scenarios:
+- id: sales-aggregate-001
+  category: positive
+  description: For completed purchases on 2026-11-06 UTC, total amount per region,
+    excluding other statuses and dates.
+  fixture: sales.jsonl
+  user_prompt: For completed purchases on 2026-11-06 UTC, total amount per region,
+    excluding other statuses and dates.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T00:00:00Z'
+        end: '2026-11-07T00:00:00Z'
+      filters:
+      - field: /status
+        op: eq
+        value: completed
+      group_by:
+      - field: /region
+        as: region
+      aggregations:
+      - op: sum
+        field: /amount
+        as: total
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-count
+  category: positive
+  description: Count all records. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: metric
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-count-non-null
+  category: positive
+  description: Count valid value observations. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count valid value observations. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count_non_null
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-null-count
+  category: positive
+  description: Count explicit null value observations. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count explicit null value observations. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: null_count
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-missing-count
+  category: positive
+  description: Count missing value fields. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count missing value fields. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: missing_count
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-count-distinct
+  category: positive
+  description: Count distinct non-null values. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count distinct non-null values. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count_distinct
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-sum
+  category: positive
+  description: Sum value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Sum value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: sum
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-avg
+  category: positive
+  description: Average value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Average value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: avg
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-min
+  category: positive
+  description: Minimum value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Minimum value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: min
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-max
+  category: positive
+  description: Maximum value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Maximum value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: max
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-median
+  category: positive
+  description: Median value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Median value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: median
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-p50
+  category: positive
+  description: 50th percentile value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: 50th percentile value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: p50
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-p90
+  category: positive
+  description: 90th percentile value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: 90th percentile value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: p90
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-p95
+  category: positive
+  description: 95th percentile value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: 95th percentile value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: p95
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-p99
+  category: positive
+  description: 99th percentile value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: 99th percentile value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: p99
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-stddev
+  category: positive
+  description: Sample standard deviation of value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Sample standard deviation of value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: stddev
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-variance
+  category: positive
+  description: Sample variance of value. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Sample variance of value. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: variance
+        as: metric
+        field: /value
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-count-if
+  category: positive
+  description: Count records where value exceeds 20. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Count records where value exceeds 20. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count_if
+        as: metric
+        where:
+          field: /value
+          op: gt
+          value: 20
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-sum-if
+  category: positive
+  description: Sum value only where value exceeds 20. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Sum value only where value exceeds 20. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: sum_if
+        as: metric
+        field: /value
+        where:
+          field: /value
+          op: gt
+          value: 20
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-avg-if
+  category: positive
+  description: Average value only where value exceeds 20. Use the complete snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Average value only where value exceeds 20. Use the complete snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: avg_if
+        as: metric
+        field: /value
+        where:
+          field: /value
+          op: gt
+          value: 20
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: aggregate-ratio-if
+  category: positive
+  description: Fraction of valid value observations exceeding 20. Use the complete
+    snapshot.
+  fixture: telemetry.jsonl
+  user_prompt: Fraction of valid value observations exceeding 20. Use the complete
+    snapshot.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: ratio_if
+        as: metric
+        field: /value
+        where:
+          field: /value
+          op: gt
+          value: 20
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-eq
+  category: positive
+  description: 'Count records matching this typed value predicate: eq, {"value": 20}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: eq, {"value": 20}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: eq
+        value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-ne
+  category: positive
+  description: 'Count records matching this typed value predicate: ne, {"value": 20}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: ne, {"value": 20}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: ne
+        value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-gt
+  category: positive
+  description: 'Count records matching this typed value predicate: gt, {"value": 20}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: gt, {"value": 20}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: gt
+        value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-gte
+  category: positive
+  description: 'Count records matching this typed value predicate: gte, {"value":
+    20}. Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: gte, {"value":
+    20}. Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: gte
+        value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-lt
+  category: positive
+  description: 'Count records matching this typed value predicate: lt, {"value": 20}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: lt, {"value": 20}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: lt
+        value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-lte
+  category: positive
+  description: 'Count records matching this typed value predicate: lte, {"value":
+    20}. Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: lte, {"value":
+    20}. Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: lte
+        value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-in
+  category: positive
+  description: 'Count records matching this typed value predicate: in, {"values":
+    [5, 10]}. Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: in, {"values":
+    [5, 10]}. Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: in
+        values:
+        - 5
+        - 10
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-not-in
+  category: positive
+  description: 'Count records matching this typed value predicate: not_in, {"values":
+    [5, 10]}. Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: not_in, {"values":
+    [5, 10]}. Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: not_in
+        values:
+        - 5
+        - 10
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-between
+  category: positive
+  description: 'Count records matching this typed value predicate: between, {"lower":
+    10, "upper": 30}. Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: between, {"lower":
+    10, "upper": 30}. Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: between
+        lower: 10
+        upper: 30
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-is-null
+  category: positive
+  description: 'Count records matching this typed value predicate: is_null, {}. Preserve
+    null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: is_null, {}. Preserve
+    null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: is_null
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-is-missing
+  category: positive
+  description: 'Count records matching this typed value predicate: is_missing, {}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: is_missing, {}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: is_missing
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-is-present
+  category: positive
+  description: 'Count records matching this typed value predicate: is_present, {}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: is_present, {}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: is_present
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: filter-is-not-null
+  category: positive
+  description: 'Count records matching this typed value predicate: is_not_null, {}.
+    Preserve null/missing semantics.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching this typed value predicate: is_not_null, {}.
+    Preserve null/missing semantics.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /value
+        op: is_not_null
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: logical-and
+  category: positive
+  description: 'Count records matching {"op": "and", "conditions": [{"field": "/value",
+    "op": "gt", "value": 20}, {"field": "/region", "op": "eq", "value": "east"}]}.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching {"op": "and", "conditions": [{"field": "/value",
+    "op": "gt", "value": 20}, {"field": "/region", "op": "eq", "value": "east"}]}.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - op: and
+        conditions:
+        - field: /value
+          op: gt
+          value: 20
+        - field: /region
+          op: eq
+          value: east
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: logical-or
+  category: positive
+  description: 'Count records matching {"op": "or", "conditions": [{"field": "/value",
+    "op": "gt", "value": 20}, {"field": "/region", "op": "eq", "value": "east"}]}.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching {"op": "or", "conditions": [{"field": "/value",
+    "op": "gt", "value": 20}, {"field": "/region", "op": "eq", "value": "east"}]}.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - op: or
+        conditions:
+        - field: /value
+          op: gt
+          value: 20
+        - field: /region
+          op: eq
+          value: east
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: logical-not
+  category: positive
+  description: 'Count records matching {"op": "not", "condition": {"field": "/value",
+    "op": "gt", "value": 20}}.'
+  fixture: telemetry.jsonl
+  user_prompt: 'Count records matching {"op": "not", "condition": {"field": "/value",
+    "op": "gt", "value": 20}}.'
+  expected:
+    outcome: success
+    query:
+      filters:
+      - op: not
+        condition:
+          field: /value
+          op: gt
+          value: 20
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: text-contains
+  category: positive
+  description: Count records whose text contains the literal '.*', case-sensitively.
+  fixture: events.jsonl
+  user_prompt: Count records whose text contains the literal '.*', case-sensitively.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /text
+        op: contains
+        value: .*
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: text-starts-with
+  category: positive
+  description: Count records whose text starts_with the literal 'a', case-sensitively.
+  fixture: events.jsonl
+  user_prompt: Count records whose text starts_with the literal 'a', case-sensitively.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /text
+        op: starts_with
+        value: a
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: text-ends-with
+  category: positive
+  description: Count records whose text ends_with the literal 'é', case-sensitively.
+  fixture: events.jsonl
+  user_prompt: Count records whose text ends_with the literal 'é', case-sensitively.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /text
+        op: ends_with
+        value: é
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: nested-pointer
+  category: positive
+  description: Sum payload.value, using the discovered nested field.
+  fixture: nested_records.jsonl
+  user_prompt: Sum payload.value, using the discovered nested field.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: sum
+        field: /payload/value
+        as: total
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: escaped-pointer
+  category: positive
+  description: Count non-null values at key a/b then nested key ~name.
+  fixture: nested_records.jsonl
+  user_prompt: Count non-null values at key a/b then nested key ~name.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count_non_null
+        field: /a~1b/~0name
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: multi-group-having-top
+  category: positive
+  description: Count records by region and service, keep groups with at least two
+    records, rank by descending count, return top two.
+  fixture: telemetry.jsonl
+  user_prompt: Count records by region and service, keep groups with at least two
+    records, rank by descending count, return top two.
+  expected:
+    outcome: success
+    query:
+      group_by:
+      - field: /region
+        as: region
+      - field: /service
+        as: service
+      aggregations:
+      - op: count
+        as: n
+      having:
+      - field: n
+        op: gte
+        value: 2
+      order_by:
+      - field: n
+        direction: desc
+      limit: 2
+    required_tools:
+    - analytics_query
+    unordered: false
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: mixed-cast-quality
+  category: positive
+  description: Explicitly cast value to float64 with invalid values as null, then
+    compute its mean and missing count. Disclose conversion failures.
+  fixture: mixed.jsonl
+  user_prompt: Explicitly cast value to float64 with invalid values as null, then
+    compute its mean and missing count. Disclose conversion failures.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /value
+        to: float64
+        on_error: 'null'
+      aggregations:
+      - op: avg
+        field: /value
+        as: mean
+      - op: missing_count
+        field: /value
+        as: missing
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: investigate-schema-count
+  category: positive
+  description: Inspect the schema, explain the plan, then count distinct non-null
+    entity identifiers.
+  fixture: events.jsonl
+  user_prompt: Inspect the schema, explain the plan, then count distinct non-null
+    entity identifiers.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count_distinct
+        field: /entity
+        as: entities
+    required_tools:
+    - analytics_describe
+    - analytics_explain_query
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: sparse-summary
+  category: positive
+  description: Report total records, valid value samples, explicit nulls, missing
+    values and mean value. State that cadence coverage is unknown.
+  fixture: sparse_records.jsonl
+  user_prompt: Report total records, valid value samples, explicit nulls, missing
+    values and mean value. State that cadence coverage is unknown.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+      - op: count_non_null
+        field: /value
+        as: count_non_null
+      - op: null_count
+        field: /value
+        as: null_count
+      - op: missing_count
+        field: /value
+        as: missing_count
+      - op: avg
+        field: /value
+        as: avg
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: matching-misspelling
+  category: positive
+  description: Count observed actor names with whole-value ratio similarity to Peter
+    >=85, case-sensitive. Similarity is not identity.
+  fixture: matching.jsonl
+  user_prompt: Count observed actor names with whole-value ratio similarity to Peter
+    >=85, case-sensitive. Similarity is not identity.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: fuzzy
+        value: Peter
+        algorithm: ratio
+        min_score: 85
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: matching-partial
+  category: positive
+  description: Count actor names containing Peter as a literal substring, case-insensitively.
+    Count records, not people.
+  fixture: matching.jsonl
+  user_prompt: Count actor names containing Peter as a literal substring, case-insensitively.
+    Count records, not people.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: contains
+        value: Peter
+        normalization:
+          case_sensitive: false
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: matching-wildcard-literal
+  category: positive
+  description: Count actor names containing the literal text Pet% (percent is an ordinary
+    character).
+  fixture: matching.jsonl
+  user_prompt: Count actor names containing the literal text Pet% (percent is an ordinary
+    character).
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: contains
+        value: Pet%
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: matching-ambiguous-name
+  category: positive
+  description: Count records with actor name exactly Peter, case-sensitive. Distinct
+    people may share this value; do not merge identities.
+  fixture: matching.jsonl
+  user_prompt: Count records with actor name exactly Peter, case-sensitive. Distinct
+    people may share this value; do not merge identities.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: eq
+        value: Peter
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: matching-rust-regex
+  category: positive
+  description: Count actor names whose values start with Peter using the Rust regex
+    ^Peter, case-sensitive.
+  fixture: matching.jsonl
+  user_prompt: Count actor names whose values start with Peter using the Rust regex
+    ^Peter, case-sensitive.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: regex
+        value: ^Peter
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300

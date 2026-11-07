@@ -1,0 +1,16 @@
+# Example 08: Compute valid-sample ratio above a threshold.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+aggregations:
+- op: ratio_if
+  field: /value
+  where:
+    field: /value
+    op: gt
+    value: 100
+  as: fraction_high
+- op: count_non_null
+  field: /value
+  as: valid_samples

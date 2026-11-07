@@ -1,0 +1,11 @@
+# Example 05: Find records where a JSON field is truly absent.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /value
+  op: is_missing
+aggregations:
+- op: count
+  as: missing_rows

@@ -1,0 +1,12 @@
+[
+  {
+    "artifact": "agent_analytics_mcp-0.1.0-py3-none-any.whl",
+    "sha256": "cebdd001f8593f759e45ae91a9ba3d7ee2fc79a635e4e96b3a2e198e4333504a",
+    "repeated_build_match": true
+  },
+  {
+    "artifact": "agent_analytics_mcp-0.1.0.tar.gz",
+    "sha256": "59e20437de7425b0257b8c4f8533237dccabfe5f01beb1a2f5392ad7526e6c86",
+    "repeated_build_match": true
+  }
+]

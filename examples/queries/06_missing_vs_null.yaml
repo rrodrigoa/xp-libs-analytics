@@ -1,0 +1,17 @@
+# Example 06: Separate missing values, explicit nulls, and usable samples.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+aggregations:
+- op: count
+  as: rows
+- op: missing_count
+  field: /value
+  as: missing_values
+- op: null_count
+  field: /value
+  as: null_values
+- op: count_non_null
+  field: /value
+  as: valid_values

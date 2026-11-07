@@ -1,0 +1,17 @@
+# Example 04: OR logic over multiple status categories.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- op: or
+  conditions:
+  - field: /status
+    op: eq
+    value: error
+  - field: /status
+    op: eq
+    value: warning
+aggregations:
+- op: count
+  as: selected_rows

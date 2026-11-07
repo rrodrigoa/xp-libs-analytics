@@ -1,0 +1,91 @@
+name: Release
+on:
+  push:
+    tags: ['v*']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+      - name: Verify version tag
+        run: |
+          python - <<'PY'
+          import os, tomllib
+          from pathlib import Path
+          version = tomllib.loads(Path('pyproject.toml').read_text())['project']['version']
+          assert version != '0.0.0' and os.environ['GITHUB_REF_NAME'] == f'v{version}'
+          PY
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -c requirements-lock.txt -e '.[dev,mcp,agent-eval]'
+      - run: ruff check . && ruff format --check . && mypy src/xp_libs_analytics
+      - run: pytest --cov=xp_libs_analytics --cov=evals.agent_skill --cov-branch --cov-report=json --cov-fail-under=90
+      - run: python scripts/check_critical_coverage.py coverage.json
+      - run: python -m pip_audit
+      - run: python scripts/inventory.py
+      - run: python -m build
+      - run: python -m twine check dist/*
+      - run: python scripts/verify_dist.py
+      - run: sha256sum dist/* > SHA256SUMS
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: release-artifacts
+          path: |
+            dist/*
+            SHA256SUMS
+            scripts/smoke.py
+            docs/evidence/sbom.json
+          retention-days: 30
+  testpypi:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-artifacts
+      - run: sha256sum -c SHA256SUMS
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+  verify-testpypi:
+    needs: testpypi
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-artifacts
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7
+        with:
+          python-version: '3.12'
+      - run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          python -m pip download --no-deps --index-url https://test.pypi.org/simple "xp-libs-analytics==$VERSION" --dest fetched
+          cmp dist/*.whl fetched/*.whl
+          sha256sum -c SHA256SUMS
+          python -m venv smoke
+          smoke/bin/python -m pip install fetched/*.whl
+          smoke/bin/python scripts/smoke.py
+          smoke/bin/xp-libs-analytics --help
+  pypi:
+    needs: verify-testpypi
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        with:
+          name: release-artifacts
+      - run: sha256sum -c SHA256SUMS
+      - uses: pypa/gh-action-pypi-publish@7245906fb61fa33a13554f9d5fb856fe61758086 # release/v1

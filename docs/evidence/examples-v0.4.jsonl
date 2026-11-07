@@ -1,0 +1,1950 @@
+{
+  "example": "01_count_all.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 12
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {},
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.702864Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "74b2e33bc10f46ea97b1b41666142d9f",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "02_filter_and_count.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      },
+      {
+        "name": "observed",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 6,
+        "observed": 5
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 6,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.936221Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "9bffb9eef08443b2b47651cf63bab5c0",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "03_group_stats_and_topk.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "avg_value",
+        "type": "float64"
+      },
+      {
+        "name": "p95_value",
+        "type": "float64"
+      },
+      {
+        "name": "rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "region": "north",
+        "avg_value": 96.0,
+        "p95_value": 182.39999999999998,
+        "rows": 3,
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "region": "east",
+        "avg_value": 72.66666666666667,
+        "p95_value": 142.6,
+        "rows": 3,
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "region": "west",
+        "avg_value": 59.1,
+        "p95_value": 109.39999999999999,
+        "rows": 6,
+        "group_key_status": {
+          "region": "present"
+        }
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.942322Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "d8796b12123645a88850a34f4e017a73",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "04_nested_or_predicates.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "selected_rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "selected_rows": 7
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 7,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.947327Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 2,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "647b5de6c2154a5ab37ba188a9e5313a",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "05_is_missing.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "missing_rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "missing_rows": 1
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 1,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.951326Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "565824a82ebb4ec880210f889c0ed367",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "06_missing_vs_null.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      },
+      {
+        "name": "missing_values",
+        "type": "int64"
+      },
+      {
+        "name": "null_values",
+        "type": "int64"
+      },
+      {
+        "name": "valid_values",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 12,
+        "missing_values": 1,
+        "null_values": 1,
+        "valid_values": 10
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.953325Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "8428b8792f2544f29a82a6d9b80586bd",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "07_conditional_aggregation.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "errors",
+        "type": "int64"
+      },
+      {
+        "name": "avg_value_during_errors",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "errors": 4,
+        "avg_value_during_errors": 140.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.958327Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 2,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "94db4ace083a4da1adda1de2efef7232",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "08_ratio_if.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "fraction_high",
+        "type": "float64"
+      },
+      {
+        "name": "valid_samples",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "fraction_high": 0.3,
+        "valid_samples": 10
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.962327Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "d3cfef14fabf471096f04d461b1bb89e",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "09_tumbling_window.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "window_start",
+        "type": "datetime"
+      },
+      {
+        "name": "events",
+        "type": "int64"
+      },
+      {
+        "name": "window_end",
+        "type": "datetime"
+      }
+    ],
+    "rows": [
+      {
+        "window_start": "2026-11-06T00:00:00Z",
+        "events": 5,
+        "window_end": "2026-11-06T00:05:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:05:00Z",
+        "events": 3,
+        "window_end": "2026-11-06T00:10:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:10:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:15:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:15:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:20:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:20:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:25:00Z"
+      },
+      {
+        "window_start": "2026-11-06T00:25:00Z",
+        "events": 1,
+        "window_end": "2026-11-06T00:30:00Z"
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": {
+        "start": "2026-11-06T00:00:00Z",
+        "end": "2026-11-06T01:00:00Z"
+      },
+      "field_quality": {
+        "/observed_at": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.966325Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "f9bba01be8134d7083f162fe92787308",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "10_sliding_window.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "window_start",
+        "type": "datetime"
+      },
+      {
+        "name": "region",
+        "type": "string"
+      },
+      {
+        "name": "events",
+        "type": "int64"
+      },
+      {
+        "name": "p99_value",
+        "type": "float64"
+      },
+      {
+        "name": "window_end",
+        "type": "datetime"
+      }
+    ],
+    "rows": [
+      {
+        "window_start": "2026-11-05T23:57:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:02:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-05T23:58:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:03:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-05T23:59:00Z",
+        "region": "west",
+        "events": 3,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:04:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:00:00Z",
+        "region": "west",
+        "events": 3,
+        "p99_value": 112.98,
+        "window_end": "2026-11-06T00:05:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:01:00Z",
+        "region": "east",
+        "events": 2,
+        "p99_value": 151.95999999999998,
+        "window_end": "2026-11-06T00:06:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:01:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 114.0,
+        "window_end": "2026-11-06T00:06:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:02:00Z",
+        "region": "east",
+        "events": 2,
+        "p99_value": 151.95999999999998,
+        "window_end": "2026-11-06T00:07:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:03:00Z",
+        "region": "west",
+        "events": 2,
+        "p99_value": 75.0,
+        "window_end": "2026-11-06T00:08:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T00:04:00Z",
+        "region": "north",
+        "events": 2,
+        "p99_value": 0.0,
+        "window_end": "2026-11-06T00:09:00Z",
+        "group_key_status": {
+          "region": "present"
+        }
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": {
+        "start": "2026-11-06T00:00:00Z",
+        "end": "2026-11-06T01:00:00Z"
+      },
+      "field_quality": {
+        "/observed_at": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": true,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.974330Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "46287c1516b9410ca8ffc0715582d7dd",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "11_explicit_cast.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "avg_value",
+        "type": "float64"
+      },
+      {
+        "name": "stdev",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "avg_value": 70.55,
+        "stdev": 66.84578022084366
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.980331Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "a98733f5da324753b52067d3fb62ce97",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "12_text_range_distinct.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "unique_tags",
+        "type": "int64"
+      },
+      {
+        "name": "min_value",
+        "type": "float64"
+      },
+      {
+        "name": "max_value",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "unique_tags": 3,
+        "min_value": 3.5,
+        "max_value": 91.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 6,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/tag": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.983330Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "e90797dabf364f4e938fb94e96e19ca5",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "13_summary_statistics.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "total",
+        "type": "float64"
+      },
+      {
+        "name": "var",
+        "type": "float64"
+      },
+      {
+        "name": "median",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "total": 705.5,
+        "var": 4468.358333333334,
+        "median": 62.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.987841Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "70d46b1b4c7f438e8ad3fba3cbe39696",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "14_nested_and_not.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 12
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/region": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.991840Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "69af56f62e994a22b48d1eb68d0c9627",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "15_conditional_sum.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "error_total",
+        "type": "float64"
+      }
+    ],
+    "rows": [
+      {
+        "error_total": 420.0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/status": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        },
+        "/value": {
+          "present": 11,
+          "missing": 1,
+          "null": 1,
+          "valid": 10,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.993840Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "14dca73fa7ab4c958e0dac5cd8e2304d",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "16_mixed_types_cast.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "rows",
+        "type": "int64"
+      },
+      {
+        "name": "avg_metric",
+        "type": "float64"
+      },
+      {
+        "name": "missing_metric",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "rows": 4,
+        "avg_metric": 7.25,
+        "missing_metric": 1
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 4,
+      "matched_rows": 4,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/metric": {
+          "present": 3,
+          "missing": 1,
+          "null": 1,
+          "valid": 2,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.996840Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "3ecbbdcc56914bb8869db8801cecc905",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "17_relative_last_hour.yaml",
+  "result": {
+    "status": "NO_DATA",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 0
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 12,
+      "matched_rows": 0,
+      "resolved_time_range": {
+        "start": "2026-11-07T02:25:23.999840Z",
+        "end": "2026-11-07T03:25:23.999840Z"
+      },
+      "field_quality": {
+        "/observed_at": {
+          "present": 12,
+          "missing": 0,
+          "null": 0,
+          "valid": 12,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:23.999840Z"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "15ee6d5d8b5b44f886b727ab3a14f732",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "18_string_exact.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 2
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 2,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.003842Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "b7ea6b41c24c4ed79b669fe2036ad905",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "19_string_normalization.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 12
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.006842Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 140,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "45a7cf6a90f04586aad94db4cf6fe2ab",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "20_prefix_suffix.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 9
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 9,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.013841Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 2,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "e4f7859ba78b47218db04df4e21692cb",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "21_whole_word.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 10
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 10,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.019841Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 119,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "47c6423a7d454afd8321e56b55133e31",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "22_ilike.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 12
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 12,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.026841Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 140,
+      "requires_isolation": false,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "813ce5a7ffc0421db77f874984794406",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "23_rust_regex.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 4
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 4,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.035841Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 0,
+      "distinct_candidates_examined": 0,
+      "normalized_bytes": 0,
+      "requires_isolation": true,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "7329d7d16127417d887c29492e2e821a",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "24_fuzzy.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 4
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 4,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:24.531037Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 22,
+      "distinct_candidates_examined": 22,
+      "normalized_bytes": 223,
+      "requires_isolation": true,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "904dc826f9744a828f4938491f010ad1",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "25_multi_field_matching.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 11
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 11,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/email": {
+          "present": 27,
+          "missing": 1,
+          "null": 0,
+          "valid": 27,
+          "cast_errors": 0
+        },
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:25.033511Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 4,
+      "comparisons": 49,
+      "distinct_candidates_examined": 49,
+      "normalized_bytes": 807,
+      "requires_isolation": true,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "671cb5c9af6f48ccad95e92d69b17848",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "26_conditional_fuzzy.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "all_events",
+        "type": "int64"
+      },
+      {
+        "name": "matching_events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "all_events": 28,
+        "matching_events": 4
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 28,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:25.539739Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 22,
+      "distinct_candidates_examined": 22,
+      "normalized_bytes": 223,
+      "requires_isolation": true,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "64346572402a442bb1ef16342951f694",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "27_temporal_fuzzy.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "window_start",
+        "type": "datetime"
+      },
+      {
+        "name": "service",
+        "type": "string"
+      },
+      {
+        "name": "events",
+        "type": "int64"
+      },
+      {
+        "name": "p95_latency",
+        "type": "float64"
+      },
+      {
+        "name": "window_end",
+        "type": "datetime"
+      }
+    ],
+    "rows": [
+      {
+        "window_start": "2026-11-06T10:00:00Z",
+        "service": "alpha",
+        "events": 1,
+        "p95_latency": 3.0,
+        "window_end": "2026-11-06T10:05:00Z",
+        "group_key_status": {
+          "service": "present"
+        }
+      },
+      {
+        "window_start": "2026-11-06T10:00:00Z",
+        "service": "beta",
+        "events": 1,
+        "p95_latency": 2.0,
+        "window_end": "2026-11-06T10:05:00Z",
+        "group_key_status": {
+          "service": "present"
+        }
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 2,
+      "resolved_time_range": {
+        "start": "2026-11-06T10:00:00Z",
+        "end": "2026-11-06T10:10:00Z"
+      },
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        },
+        "/latency_ms": {
+          "present": 28,
+          "missing": 0,
+          "null": 0,
+          "valid": 28,
+          "cast_errors": 0
+        },
+        "/service": {
+          "present": 28,
+          "missing": 0,
+          "null": 0,
+          "valid": 28,
+          "cast_errors": 0
+        },
+        "/status": {
+          "present": 28,
+          "missing": 0,
+          "null": 0,
+          "valid": 28,
+          "cast_errors": 0
+        },
+        "/timestamp": {
+          "present": 28,
+          "missing": 0,
+          "null": 0,
+          "valid": 28,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:26.075706Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 2,
+      "comparisons": 16,
+      "distinct_candidates_examined": 16,
+      "normalized_bytes": 135,
+      "requires_isolation": true,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation"
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "10eee0334b524fcf86da48d5f7a50615",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}
+{
+  "example": "28_safe_matching_diagnostics.yaml",
+  "result": {
+    "status": "OK",
+    "columns": [
+      {
+        "name": "events",
+        "type": "int64"
+      }
+    ],
+    "rows": [
+      {
+        "events": 4
+      }
+    ],
+    "truncated": false,
+    "evidence": {
+      "input_rows": 28,
+      "matched_rows": 4,
+      "resolved_time_range": null,
+      "field_quality": {
+        "/actor/name": {
+          "present": 27,
+          "missing": 1,
+          "null": 1,
+          "valid": 26,
+          "cast_errors": 0
+        }
+      },
+      "coverage": "UNKNOWN",
+      "partial_boundary_windows": false,
+      "schema_revision": 1,
+      "source_kind": "inline_json",
+      "computed_at": "2026-11-07T03:25:26.696889Z"
+    },
+    "matching": {
+      "used": true,
+      "work_units": 1,
+      "comparisons": 22,
+      "distinct_candidates_examined": 22,
+      "normalized_bytes": 223,
+      "requires_isolation": true,
+      "candidate_scope": "time_and_independent_nonfuzzy_conjuncts",
+      "predicate_complete": true,
+      "algorithm_versions": {
+        "rapidfuzz": "3.14.6",
+        "polars": "2.1.0",
+        "normalization": "unicode-15.0.0:normalize-trim-casefold/v1"
+      },
+      "diagnostic_scope": "matching_leaf_hits_within_post_all_filters_pre_aggregation",
+      "top_values": [
+        {
+          "field": "/actor/name",
+          "value": null,
+          "value_ref": "8455b36c46ec531edcca2ab5d635c5ad3d5c5546fc94bb64d5a0fad65a57f180",
+          "frequency": 2,
+          "match_type": "fuzzy",
+          "normalization": {
+            "case_sensitive": false,
+            "unicode": "nfkc",
+            "trim": true
+          },
+          "matched_rules": [
+            {
+              "match_type": "fuzzy",
+              "normalization": {
+                "case_sensitive": false,
+                "unicode": "nfkc",
+                "trim": true
+              },
+              "algorithm": "ratio",
+              "score": 100.0
+            }
+          ],
+          "fuzzy": {
+            "algorithm": "ratio"
+          },
+          "score": 100.0,
+          "truncated": true
+        },
+        {
+          "field": "/actor/name",
+          "value": null,
+          "value_ref": "a1eee861bd8c18210368680df140aa7c0b1ff07c48bb75ee770232231c9bf45f",
+          "frequency": 1,
+          "match_type": "fuzzy",
+          "normalization": {
+            "case_sensitive": false,
+            "unicode": "nfkc",
+            "trim": true
+          },
+          "matched_rules": [
+            {
+              "match_type": "fuzzy",
+              "normalization": {
+                "case_sensitive": false,
+                "unicode": "nfkc",
+                "trim": true
+              },
+              "algorithm": "ratio",
+              "score": 100.0
+            }
+          ],
+          "fuzzy": {
+            "algorithm": "ratio"
+          },
+          "score": 100.0,
+          "truncated": true
+        }
+      ],
+      "diagnostics_truncated": true,
+      "complete": false
+    },
+    "warnings": [],
+    "error": null,
+    "version": "analytics.result/v1",
+    "query_id": "f887849c5f3a4548b35a76ebf7bb7414",
+    "dataset": {
+      "name": "example_data",
+      "revision": 1
+    }
+  }
+}

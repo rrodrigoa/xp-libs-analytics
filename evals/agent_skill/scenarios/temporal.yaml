@@ -1,0 +1,314 @@
+scenarios:
+- id: window-tumbling-1m
+  category: temporal
+  description: Count records in tumbling UTC windows of 1m, between 10:00 inclusive
+    and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  fixture: telemetry.jsonl
+  user_prompt: Count records in tumbling UTC windows of 1m, between 10:00 inclusive
+    and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      window:
+        type: tumbling
+        size: 1m
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: window-tumbling-5m
+  category: temporal
+  description: Count records in tumbling UTC windows of 5m, between 10:00 inclusive
+    and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  fixture: telemetry.jsonl
+  user_prompt: Count records in tumbling UTC windows of 5m, between 10:00 inclusive
+    and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      window:
+        type: tumbling
+        size: 5m
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: window-sliding-1m
+  category: temporal
+  description: Count records in sliding UTC windows of 1m stepping by 1m, between
+    10:00 inclusive and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  fixture: telemetry.jsonl
+  user_prompt: Count records in sliding UTC windows of 1m stepping by 1m, between
+    10:00 inclusive and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      window:
+        type: sliding
+        size: 1m
+        step: 1m
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: window-sliding-5m
+  category: temporal
+  description: Count records in sliding UTC windows of 5m stepping by 1m, between
+    10:00 inclusive and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  fixture: telemetry.jsonl
+  user_prompt: Count records in sliding UTC windows of 5m stepping by 1m, between
+    10:00 inclusive and 11:00 exclusive on 2026-11-06. Report both window bounds.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      window:
+        type: sliding
+        size: 5m
+        step: 1m
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: relative-last-hour
+  category: temporal
+  description: Using the supplied evaluation UTC clock, count records in the last
+    60 minutes based on ts.
+  fixture: telemetry.jsonl
+  user_prompt: Using the supplied evaluation UTC clock, count records in the last
+    60 minutes based on ts.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        last_minutes: 60
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: timezone-half-open
+  category: temporal
+  description: Count records from 10:00 inclusive to 11:00 exclusive UTC on 2026-11-06;
+    respect timestamp offsets.
+  fixture: timezone.jsonl
+  user_prompt: Count records from 10:00 inclusive to 11:00 exclusive UTC on 2026-11-06;
+    respect timestamp offsets.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: epoch-seconds
+  category: temporal
+  description: Count records in the last hour using numeric ts explicitly in epoch
+    seconds and the supplied clock.
+  fixture: epoch.jsonl
+  user_prompt: Count records in the last hour using numeric ts explicitly in epoch
+    seconds and the supplied clock.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: epoch_s
+        on_error: reject
+      time_range:
+        field: /ts
+        last_minutes: 60
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+- id: sparse-dense-windows
+  category: temporal
+  description: Count records in 5m tumbling windows from 10:00 to 11:00 UTC on 2026-11-06.
+    Include bounded empty windows without grouping.
+  fixture: sparse_records.jsonl
+  user_prompt: Count records in 5m tumbling windows from 10:00 to 11:00 UTC on 2026-11-06.
+    Include bounded empty windows without grouping.
+  expected:
+    outcome: success
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      window:
+        type: tumbling
+        size: 5m
+      options:
+        include_empty_windows: true
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300

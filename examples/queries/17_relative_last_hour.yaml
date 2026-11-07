@@ -1,0 +1,15 @@
+# Example 17: relative UTC range resolved at execution time; sample timestamps are fixed and may yield NO_DATA.
+version: analytics.query/v1
+dataset:
+  name: example_data
+casts:
+- field: /observed_at
+  to: datetime
+  format: rfc3339
+  on_error: reject
+time_range:
+  field: /observed_at
+  last_minutes: 60
+aggregations:
+- op: count
+  as: events

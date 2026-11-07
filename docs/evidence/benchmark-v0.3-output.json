@@ -1,0 +1,71 @@
+{
+  "timestamp": "2026-11-06T21:01:54.826689+00:00",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "python": "3.12.14",
+  "cpu": "Intel64 Family 6 Model 198 Stepping 2, GenuineIntel",
+  "logical_cpus": 24,
+  "total_memory_bytes": 68137205760,
+  "execution": "trusted in-process SDK; full parse/type/cost planning included in query latency",
+  "benchmarks": [
+    {
+      "rows": 1000,
+      "query": "count",
+      "repeats": 9,
+      "ingestion_ms": 8.48479988053441,
+      "p50_ms": 2.5649000890552998,
+      "p95_ms": 350.2113001886755,
+      "peak_rss_bytes": 64344064,
+      "additional_peak_rss_bytes": 22601728
+    },
+    {
+      "rows": 1000,
+      "query": "grouped",
+      "repeats": 9,
+      "ingestion_ms": 8.48479988053441,
+      "p50_ms": 5.186900030821562,
+      "p95_ms": 13.043700018897653,
+      "peak_rss_bytes": 68964352,
+      "additional_peak_rss_bytes": 27222016
+    },
+    {
+      "rows": 10000,
+      "query": "count",
+      "repeats": 9,
+      "ingestion_ms": 99.56029988825321,
+      "p50_ms": 22.090099984779954,
+      "p95_ms": 53.45559981651604,
+      "peak_rss_bytes": 83546112,
+      "additional_peak_rss_bytes": 14376960
+    },
+    {
+      "rows": 10000,
+      "query": "grouped",
+      "repeats": 9,
+      "ingestion_ms": 99.56029988825321,
+      "p50_ms": 31.66759992018342,
+      "p95_ms": 44.12059998139739,
+      "peak_rss_bytes": 86872064,
+      "additional_peak_rss_bytes": 17702912
+    },
+    {
+      "rows": 100000,
+      "query": "count",
+      "repeats": 9,
+      "ingestion_ms": 1731.6105999052525,
+      "p50_ms": 462.5645000487566,
+      "p95_ms": 486.76869994960725,
+      "peak_rss_bytes": 208015360,
+      "additional_peak_rss_bytes": 122548224
+    },
+    {
+      "rows": 100000,
+      "query": "grouped",
+      "repeats": 9,
+      "ingestion_ms": 1731.6105999052525,
+      "p50_ms": 648.5603000037372,
+      "p95_ms": 689.2540999688208,
+      "peak_rss_bytes": 231186432,
+      "additional_peak_rss_bytes": 145719296
+    }
+  ]
+}

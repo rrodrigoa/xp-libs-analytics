@@ -1,0 +1,32 @@
+# Example 10: Create five-minute overlapping buckets every minute.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+casts:
+- field: /observed_at
+  to: datetime
+  format: rfc3339
+  on_error: reject
+time_range:
+  field: /observed_at
+  start: '2026-11-06T00:00:00Z'
+  end: '2026-11-06T01:00:00Z'
+window:
+  type: sliding
+  size: 5m
+  step: 1m
+group_by:
+- field: /region
+  as: region
+aggregations:
+- op: count
+  as: events
+- op: p99
+  field: /value
+  as: p99_value
+having:
+- field: events
+  op: gte
+  value: 2
+limit: 50

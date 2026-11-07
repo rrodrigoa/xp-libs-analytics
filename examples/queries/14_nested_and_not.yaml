@@ -1,0 +1,20 @@
+# Example 14: Nested AND/NOT with membership.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- op: and
+  conditions:
+  - field: /region
+    op: not_in
+    values:
+    - test
+    - unknown
+  - op: not
+    condition:
+      field: /status
+      op: is_null
+aggregations:
+- op: count
+  as: rows

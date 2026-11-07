@@ -1,0 +1,8 @@
+# Example 01: Count all admitted records.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+aggregations:
+- op: count
+  as: rows

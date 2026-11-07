@@ -1,0 +1,335 @@
+[
+  {
+    "timestamp": "2026-11-06T10:00:00Z",
+    "service": "alpha",
+    "status": "ok",
+    "latency_ms": 1,
+    "actor": {
+      "id": "fictional-0",
+      "email": "user0@example.invalid",
+      "username": "handle0",
+      "name": "Peter"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:01Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 2,
+    "actor": {
+      "id": "fictional-1",
+      "email": "user1@example.invalid",
+      "username": "handle1",
+      "name": "peter"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:02Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 3,
+    "actor": {
+      "id": "fictional-2",
+      "email": "user2@example.invalid",
+      "username": "handle2",
+      "name": "Pter"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:03Z",
+    "service": "beta",
+    "status": "ok",
+    "latency_ms": 4,
+    "actor": {
+      "id": "fictional-3",
+      "email": "user3@example.invalid",
+      "username": "handle3",
+      "name": "Peter Johnson"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:04Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 5,
+    "actor": {
+      "id": "fictional-4",
+      "email": "user4@example.invalid",
+      "username": "handle4",
+      "name": "Pete Johnson"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:05Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 6,
+    "actor": {
+      "id": "fictional-5",
+      "email": "user5@example.invalid",
+      "username": "handle5",
+      "name": "Peterson"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:06Z",
+    "service": "alpha",
+    "status": "ok",
+    "latency_ms": 7,
+    "actor": {
+      "id": "fictional-6",
+      "email": "user6@example.invalid",
+      "username": "handle6",
+      "name": "William"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:07Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 8,
+    "actor": {
+      "id": "fictional-7",
+      "email": "user7@example.invalid",
+      "username": "handle7",
+      "name": "Will"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:08Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 9,
+    "actor": {
+      "id": "fictional-8",
+      "email": "user8@example.invalid",
+      "username": "handle8",
+      "name": "WILLIAMS"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:09Z",
+    "service": "beta",
+    "status": "ok",
+    "latency_ms": 10,
+    "actor": {
+      "id": "fictional-9",
+      "email": "user9@example.invalid",
+      "username": "handle9",
+      "name": "person peter@example.invalid"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:10Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 11,
+    "actor": {
+      "id": "fictional-10",
+      "email": "user10@example.invalid",
+      "username": "handle10",
+      "name": "Peter-Johnson"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:11Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 12,
+    "actor": {
+      "id": "fictional-11",
+      "email": "user11@example.invalid",
+      "username": "handle11",
+      "name": "Peter_Johnson"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:12Z",
+    "service": "alpha",
+    "status": "ok",
+    "latency_ms": 13,
+    "actor": {
+      "id": "fictional-12",
+      "email": "user12@example.invalid",
+      "username": "handle12",
+      "name": "Pete.*"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:00:13Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 14,
+    "actor": {
+      "id": "fictional-13",
+      "email": "user13@example.invalid",
+      "username": "handle13",
+      "name": "Pet%"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:00Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 15,
+    "actor": {
+      "id": "fictional-14",
+      "email": "user14@example.invalid",
+      "username": "handle14",
+      "name": "Pet_"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:01Z",
+    "service": "beta",
+    "status": "ok",
+    "latency_ms": 16,
+    "actor": {
+      "id": "fictional-15",
+      "email": "user15@example.invalid",
+      "username": "handle15",
+      "name": "Pet\\"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:02Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 17,
+    "actor": {
+      "id": "fictional-16",
+      "email": "user16@example.invalid",
+      "username": "handle16",
+      "name": null
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:03Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 18,
+    "actor": {
+      "id": "fictional-17",
+      "email": "user17@example.invalid",
+      "username": "handle17"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:04Z",
+    "service": "alpha",
+    "status": "ok",
+    "latency_ms": 19,
+    "actor": {
+      "id": "fictional-18",
+      "email": "user18@example.invalid",
+      "username": "handle18",
+      "name": "Peter"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:05Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 20,
+    "actor": {
+      "id": "fictional-19",
+      "email": "user19@example.invalid",
+      "username": "handle19",
+      "name": "prefix Peter"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:06Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 21,
+    "actor": {
+      "id": "fictional-20",
+      "email": "user20@example.invalid",
+      "username": "handle20",
+      "name": "Peter\nJohnson"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:07Z",
+    "service": "beta",
+    "status": "ok",
+    "latency_ms": 22,
+    "actor": {
+      "id": "fictional-21",
+      "email": "user21@example.invalid",
+      "username": "handle21",
+      "name": "José"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:08Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 23,
+    "actor": {
+      "id": "fictional-22",
+      "email": "user22@example.invalid",
+      "username": "handle22",
+      "name": "José"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:09Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 24,
+    "actor": {
+      "id": "fictional-23",
+      "email": "user23@example.invalid",
+      "username": "handle23",
+      "name": "Straße"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:10Z",
+    "service": "alpha",
+    "status": "ok",
+    "latency_ms": 25,
+    "actor": {
+      "id": "fictional-24",
+      "email": "user24@example.invalid",
+      "username": "handle24",
+      "name": "STRASSE"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:11Z",
+    "service": "beta",
+    "status": "error",
+    "latency_ms": 26,
+    "actor": {
+      "id": "fictional-25",
+      "email": "user25@example.invalid",
+      "username": "handle25",
+      "name": "李明"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:05:12Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 27,
+    "actor": {
+      "id": "fictional-26",
+      "email": "user26@example.invalid",
+      "username": "handle26",
+      "name": "Full Peter suffix"
+    }
+  },
+  {
+    "timestamp": "2026-11-06T10:10:00Z",
+    "service": "alpha",
+    "status": "error",
+    "latency_ms": 28,
+    "actor": {
+      "id": "boundary",
+      "name": "Outside Peter"
+    }
+  }
+]

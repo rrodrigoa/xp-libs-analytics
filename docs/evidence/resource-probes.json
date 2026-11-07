@@ -1,0 +1,58 @@
+[
+  {
+    "probe": "yaml_depth",
+    "outcome": "QUERY_YAML_COMPLEXITY_LIMIT",
+    "wall_seconds": 0.3440000000409782,
+    "peak_rss_bytes": 39460864,
+    "parent_terminated": false,
+    "exit_code": 0
+  },
+  {
+    "probe": "wide_input",
+    "outcome": "INPUT_TOO_WIDE",
+    "wall_seconds": 0.2660000000614673,
+    "peak_rss_bytes": 49127424,
+    "parent_terminated": false,
+    "exit_code": 0
+  },
+  {
+    "probe": "groups",
+    "outcome": "RESOURCE_GROUPS_LIMIT",
+    "wall_seconds": 0.29600000008940697,
+    "peak_rss_bytes": 46333952,
+    "parent_terminated": false,
+    "exit_code": 0
+  },
+  {
+    "probe": "overlap",
+    "outcome": "QUERY_WINDOW_INVALID",
+    "wall_seconds": 0.2970000000204891,
+    "peak_rss_bytes": 46268416,
+    "parent_terminated": false,
+    "exit_code": 0
+  },
+  {
+    "probe": "distinct",
+    "outcome": "QUERY_TOO_EXPENSIVE",
+    "wall_seconds": 0.31299999984912574,
+    "peak_rss_bytes": 47345664,
+    "parent_terminated": false,
+    "exit_code": 0
+  },
+  {
+    "probe": "memory",
+    "outcome": "RESOURCE_MEMORY_LIMIT",
+    "wall_seconds": 0.25,
+    "peak_rss_bytes": 38334464,
+    "parent_terminated": false,
+    "exit_code": 0
+  },
+  {
+    "probe": "cpu",
+    "outcome": "OS_TERMINATED",
+    "wall_seconds": 2.422000000020489,
+    "peak_rss_bytes": 38522880,
+    "parent_terminated": false,
+    "exit_code": 3221225540
+  }
+]

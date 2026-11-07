@@ -1,0 +1,97 @@
+[
+  {
+    "observed_at": "2026-11-06T00:00:10Z",
+    "region": "west",
+    "status": "ok",
+    "value": 12.0,
+    "tag": "prod-a",
+    "metrics": {
+      "delay": 12.0
+    }
+  },
+  {
+    "observed_at": "2026-11-06T00:01:10Z",
+    "region": "west",
+    "status": "warning",
+    "value": 114.0,
+    "tag": "prod-a",
+    "metrics": {
+      "delay": 114.0
+    }
+  },
+  {
+    "observed_at": "2026-11-06T00:02:10Z",
+    "region": "east",
+    "status": "error",
+    "value": 153.0,
+    "tag": "prod-b",
+    "metrics": {
+      "delay": 153.0
+    }
+  },
+  {
+    "observed_at": "2026-11-06T00:03:10Z",
+    "region": "west",
+    "status": "error",
+    "value": null,
+    "tag": "prod-b",
+    "metrics": {
+      "delay": null
+    }
+  },
+  {
+    "observed_at": "2026-11-06T00:04:10Z",
+    "region": "north",
+    "status": "ok",
+    "tag": "test-a"
+  },
+  {
+    "observed_at": "2026-11-06T00:05:10Z",
+    "region": "east",
+    "status": "warning",
+    "value": 49.0,
+    "tag": "prod-c"
+  },
+  {
+    "observed_at": "2026-11-06T00:07:10Z",
+    "region": "west",
+    "status": "error",
+    "value": 75.0,
+    "tag": "prod-a"
+  },
+  {
+    "observed_at": "2026-11-06T00:08:10Z",
+    "region": "north",
+    "status": "ok",
+    "value": 0.0,
+    "tag": "test-a"
+  },
+  {
+    "observed_at": "2026-11-06T00:13:10Z",
+    "region": "west",
+    "status": "warning",
+    "value": 91.0,
+    "tag": "prod-c"
+  },
+  {
+    "observed_at": "2026-11-06T00:17:10Z",
+    "region": "east",
+    "status": "ok",
+    "value": 16.0,
+    "tag": "prod-c"
+  },
+  {
+    "observed_at": "2026-11-06T00:24:10Z",
+    "region": "north",
+    "status": "error",
+    "value": 192.0,
+    "tag": "prod-d"
+  },
+  {
+    "observed_at": "2026-11-06T00:29:10Z",
+    "region": "west",
+    "status": "ok",
+    "value": 3.5,
+    "tag": "prod-e"
+  }
+]

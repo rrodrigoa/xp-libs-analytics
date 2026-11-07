@@ -1,0 +1,22 @@
+# Diagnostic top two is output-only; all matching rows remain in the aggregate.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: fuzzy
+  value: Peter
+  algorithm: ratio
+  min_score: 85
+  normalization:
+    case_sensitive: false
+    unicode: nfkc
+    trim: true
+aggregations:
+- op: count
+  as: events
+options:
+  matching_details:
+    include: true
+    top_values: 2
+    include_raw_values: false

@@ -1,0 +1,20 @@
+# Fuzzy selection inside a conditional aggregate preserves total-record denominator.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters: []
+aggregations:
+- op: count
+  as: all_events
+- op: count_if
+  as: matching_events
+  where:
+    field: /actor/name
+    op: fuzzy
+    value: Peter
+    algorithm: ratio
+    min_score: 85
+    normalization:
+      case_sensitive: false
+      unicode: nfkc
+      trim: true

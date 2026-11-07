@@ -1,0 +1,23 @@
+# Example 09: Create five-minute non-overlapping UTC buckets.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+casts:
+- field: /observed_at
+  to: datetime
+  format: rfc3339
+  on_error: reject
+time_range:
+  field: /observed_at
+  start: '2026-11-06T00:00:00Z'
+  end: '2026-11-06T01:00:00Z'
+window:
+  type: tumbling
+  size: 5m
+aggregations:
+- op: count
+  as: events
+order_by:
+- field: window_start
+  direction: asc

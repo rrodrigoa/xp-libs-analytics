@@ -1,0 +1,15 @@
+# Example 13: Sum, variance and median.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+aggregations:
+- op: sum
+  field: /value
+  as: total
+- op: variance
+  field: /value
+  as: var
+- op: median
+  field: /value
+  as: median

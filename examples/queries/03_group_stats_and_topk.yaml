@@ -1,0 +1,21 @@
+# Example 03: Group, average, P95, order and top-K.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+group_by:
+- field: /region
+  as: region
+aggregations:
+- op: avg
+  field: /value
+  as: avg_value
+- op: p95
+  field: /value
+  as: p95_value
+- op: count
+  as: rows
+order_by:
+- field: p95_value
+  direction: desc
+limit: 10

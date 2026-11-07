@@ -1,0 +1,23 @@
+# Example 12: Literal string prefix, numeric range, and distinct count.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /tag
+  op: starts_with
+  value: prod-
+- field: /value
+  op: between
+  lower: 0
+  upper: 100
+aggregations:
+- op: count_distinct
+  field: /tag
+  as: unique_tags
+- op: min
+  field: /value
+  as: min_value
+- op: max
+  field: /value
+  as: max_value

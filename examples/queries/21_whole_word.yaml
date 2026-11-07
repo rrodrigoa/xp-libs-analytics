@@ -1,0 +1,13 @@
+# Rust Unicode word boundaries; underscore remains a word character.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: word
+  value: Peter
+  normalization:
+    case_sensitive: false
+aggregations:
+- op: count
+  as: events

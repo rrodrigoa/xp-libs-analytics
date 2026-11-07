@@ -1,0 +1,16 @@
+# Example 11: Cast an allowed scalar before numeric statistics.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+casts:
+- field: /value
+  to: float64
+  on_error: 'null'
+aggregations:
+- op: avg
+  field: /value
+  as: avg_value
+- op: stddev
+  field: /value
+  as: stdev

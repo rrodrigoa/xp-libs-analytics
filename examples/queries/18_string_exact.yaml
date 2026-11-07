@@ -1,0 +1,11 @@
+# Exact, case-sensitive observed string equality.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: eq
+  value: Peter
+aggregations:
+- op: count
+  as: events

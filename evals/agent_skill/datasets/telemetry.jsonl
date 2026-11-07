@@ -1,0 +1,14 @@
+{"value": 55, "region": "east", "service": "a", "status": "ok", "flag": false, "name": "record_11_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:11:00Z"}
+{"value": 50, "region": "west", "service": "a", "status": "ok", "flag": true, "name": "record_10_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:10:00Z"}
+{"value": 45, "region": "east", "service": "b", "status": "ok", "flag": false, "name": "record_9_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:09:00Z"}
+{"value": 40, "region": "west", "service": "a", "status": "error", "flag": true, "name": "record_8_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:08:00Z"}
+{"value": 35, "region": "east", "service": "a", "status": "ok", "flag": false, "name": "record_7_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:07:00Z"}
+{"value": 30, "region": "west", "service": "b", "status": "ok", "flag": true, "name": "record_6_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:06:00Z"}
+{"value": 25, "region": "east", "service": "a", "status": "ok", "flag": false, "name": "record_5_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:05:00Z"}
+{"value": 20, "region": "west", "service": "a", "status": "error", "flag": true, "name": "record_4_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:04:00Z"}
+{"value": 15, "region": "east", "service": "b", "status": "ok", "flag": false, "name": "record_3_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:03:00Z"}
+{"value": 10, "region": "west", "service": "a", "status": "ok", "flag": true, "name": "record_2_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:02:00Z"}
+{"value": 5, "region": "east", "service": "a", "status": "ok", "flag": false, "name": "record_1_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:01:00Z"}
+{"value": 0, "region": "west", "service": "b", "status": "error", "flag": true, "name": "record_0_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx", "ts": "2026-11-06T10:00:00Z"}
+{"region": "east", "value": null, "ts": "2026-11-06T10:02:30Z", "status": "error"}
+{"region": "west", "ts": "2026-11-06T10:03:30Z", "status": "ok"}

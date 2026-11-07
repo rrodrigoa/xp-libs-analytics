@@ -1,0 +1,17 @@
+# Example 16: mixed numeric/string samples; use examples/data/mixed_types.json.
+version: analytics.query/v1
+dataset:
+  name: example_data
+casts:
+- field: /metric
+  to: float64
+  on_error: 'null'
+aggregations:
+- op: count
+  as: rows
+- op: avg
+  field: /metric
+  as: avg_metric
+- op: missing_count
+  field: /metric
+  as: missing_metric

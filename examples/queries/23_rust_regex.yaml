@@ -1,0 +1,11 @@
+# Rust regex search with explicit absolute anchors; no Python regex execution.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: regex
+  value: \APeter(?:[-_]|\z)
+aggregations:
+- op: count
+  as: events

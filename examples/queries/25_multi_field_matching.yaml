@@ -1,0 +1,24 @@
+# Any rule on any authorized field; no row multiplication.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- match:
+    fields:
+    - /actor/name
+    - /actor/email
+    patterns:
+    - op: word
+      value: Peter
+    - op: fuzzy
+      value: Pter
+      algorithm: ratio
+      min_score: 85
+    normalization:
+      case_sensitive: false
+      unicode: nfkc
+      trim: true
+    mode: any
+aggregations:
+- op: count
+  as: events

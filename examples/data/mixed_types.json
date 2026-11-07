@@ -1,0 +1,17 @@
+[
+  {
+    "metric": "12.5",
+    "kind": "a"
+  },
+  {
+    "metric": 2.0,
+    "kind": "a"
+  },
+  {
+    "metric": null,
+    "kind": "b"
+  },
+  {
+    "kind": "b"
+  }
+]

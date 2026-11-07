@@ -1,0 +1,16 @@
+# Literal prefix or suffix; each record contributes once.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- op: or
+  conditions:
+  - field: /actor/name
+    op: starts_with
+    value: Peter
+  - field: /actor/name
+    op: ends_with
+    value: Peter
+aggregations:
+- op: count
+  as: events

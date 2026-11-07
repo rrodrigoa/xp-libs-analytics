@@ -1,0 +1,503 @@
+scenarios:
+- id: recovery-unknown-field
+  category: recovery
+  description: Inspect the authorized schema and report the arithmetic mean of value
+    measurements, excluding null and missing samples. Repair the prior unknown-field
+    failure.
+  fixture: telemetry.jsonl
+  user_prompt: Inspect the authorized schema and report the arithmetic mean of value
+    measurements, excluding null and missing samples. Repair the prior unknown-field
+    failure.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: avg
+        field: /value
+        as: mean
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      aggregations:
+      - op: sum
+        field: /typo
+        as: n
+    error_code: DATA_FIELD_UNKNOWN
+    discover_required: true
+- id: recovery-invalid-aggregate
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      aggregations:
+      - op: average
+        field: /value
+        as: n
+    error_code: QUERY_UNKNOWN_OPERATOR
+    discover_required: false
+- id: recovery-type-mismatch
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      aggregations:
+      - op: avg
+        field: /region
+        as: n
+    error_code: QUERY_OPERATOR_TYPE
+    discover_required: false
+- id: recovery-timestamp
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      time_range:
+        field: /ts
+        last_minutes: 60
+      aggregations:
+      - op: count
+        as: n
+    error_code: DATA_TIMESTAMP_INVALID
+    discover_required: false
+- id: recovery-window
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      casts:
+      - field: /ts
+        to: datetime
+        format: rfc3339
+        on_error: reject
+      time_range:
+        field: /ts
+        start: '2026-11-06T10:00:00Z'
+        end: '2026-11-06T11:00:00Z'
+      window:
+        type: tumbling
+        size: 2m
+      aggregations:
+      - op: count
+        as: n
+    error_code: QUERY_WINDOW_INVALID
+    discover_required: false
+- id: recovery-pointer
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      aggregations:
+      - op: sum
+        field: value
+        as: n
+    error_code: QUERY_INVALID_POINTER
+    discover_required: false
+- id: recovery-grouping
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      group_by:
+      - field: /value
+        as: a
+      - field: /value
+        as: b
+      aggregations:
+      - op: count
+        as: n
+    error_code: QUERY_GROUP_INVALID
+    discover_required: false
+- id: recovery-operations
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      joins: []
+      aggregations:
+      - op: count
+        as: n
+    error_code: QUERY_UNSUPPORTED_FEATURE
+    discover_required: false
+- id: recovery-result-budget
+  category: recovery
+  description: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Repair the prior failed
+    attempt; no fields, filters, grouping or time range are needed for this count.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      group_by:
+      - field: /name
+        as: name
+      aggregations:
+      - op: count
+        as: n
+    error_code: RESOURCE_RESULT_LIMIT
+    discover_required: false
+  policy:
+    max_result_bytes: 1100
+- id: recovery-invalid-yaml
+  category: recovery
+  description: Count all records in the authorized snapshot after correcting the failed
+    YAML.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot after correcting the failed
+    YAML.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    raw_yaml: 'version: ['
+    error_code: QUERY_YAML_INVALID
+    discover_required: false
+- id: recovery-missing-argument
+  category: recovery
+  description: Count all records in the authorized snapshot. Correct the missing tool
+    argument.
+  fixture: telemetry.jsonl
+  user_prompt: Count all records in the authorized snapshot. Correct the missing tool
+    argument.
+  expected:
+    outcome: success
+    query:
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    arguments: {}
+    error_code: MCP_INVALID_TOOL_CALL
+    discover_required: false
+- id: recovery-matching-regex
+  category: recovery
+  description: Count actor names containing Peter as literal text, case-sensitive.
+    Repair the earlier unsupported regex with literal matching.
+  fixture: matching.jsonl
+  user_prompt: Count actor names containing Peter as literal text, case-sensitive.
+    Repair the earlier unsupported regex with literal matching.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: contains
+        value: Peter
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      filters:
+      - field: /actor/name
+        op: regex
+        value: (?<=P)eter
+      aggregations:
+      - op: count
+        as: n
+    error_code: MATCH_REGEX_INVALID
+    discover_required: false
+- id: recovery-matching-score
+  category: recovery
+  description: Count actor names with ratio similarity to Peter >=85. Repair the earlier
+    invalid threshold using the requested 85.
+  fixture: matching.jsonl
+  user_prompt: Count actor names with ratio similarity to Peter >=85. Repair the earlier
+    invalid threshold using the requested 85.
+  expected:
+    outcome: success
+    query:
+      filters:
+      - field: /actor/name
+        op: fuzzy
+        value: Peter
+        algorithm: ratio
+        min_score: 85
+      aggregations:
+      - op: count
+        as: n
+    required_tools:
+    - analytics_query
+  allowed_tools:
+  - analytics_capabilities
+  - analytics_describe
+  - analytics_error_info
+  - analytics_explain_query
+  - analytics_list_datasets
+  - analytics_query
+  - analytics_unregister_dataset
+  - analytics_validate_query
+  limits:
+    max_turns: 12
+    max_tool_calls: 12
+    timeout: 300
+  recovery:
+    query:
+      filters:
+      - field: /actor/name
+        op: fuzzy
+        value: Peter
+        algorithm: ratio
+        min_score: 20
+      aggregations:
+      - op: count
+        as: n
+    error_code: MATCH_FUZZY_THRESHOLD_INVALID
+    discover_required: false

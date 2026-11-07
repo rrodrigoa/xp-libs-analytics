@@ -1,0 +1,19 @@
+# Example 07: Compute conditional counts and averages.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+aggregations:
+- op: count_if
+  where:
+    field: /status
+    op: eq
+    value: error
+  as: errors
+- op: avg_if
+  field: /value
+  where:
+    field: /status
+    op: eq
+    value: error
+  as: avg_value_during_errors

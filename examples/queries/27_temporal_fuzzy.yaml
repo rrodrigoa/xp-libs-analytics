@@ -1,0 +1,38 @@
+# Exhaustive matching plus time/status filters, five-minute windows, grouping and P95.
+version: analytics.query/v1
+dataset:
+  name: example_data
+filters:
+- field: /actor/name
+  op: fuzzy
+  value: Peter
+  algorithm: ratio
+  min_score: 85
+  normalization:
+    case_sensitive: false
+    unicode: nfkc
+    trim: true
+- field: /status
+  op: eq
+  value: error
+aggregations:
+- op: count
+  as: events
+- op: p95
+  field: /latency_ms
+  as: p95_latency
+casts:
+- field: /timestamp
+  to: datetime
+  format: rfc3339
+  on_error: reject
+time_range:
+  field: /timestamp
+  start: '2026-11-06T10:00:00Z'
+  end: '2026-11-06T10:10:00Z'
+window:
+  type: tumbling
+  size: 5m
+group_by:
+- field: /service
+  as: service

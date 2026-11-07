@@ -1,0 +1,101 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "xp-libs-analytics"
+version = "0.4.0"
+description = "Schema-on-read, in-memory analytics for agent-generated YAML queries"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+license-files = ["LICENSE", "THIRD_PARTY_NOTICES.md"]
+authors = [{name = "Generic In-Memory Analytics contributors"}]
+keywords = ["analytics", "polars", "mcp", "agents", "json", "yaml", "in-memory"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Operating System :: OS Independent",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+]
+dependencies = [
+  "polars>=2.1,<2.2",
+  "RapidFuzz>=3.14.6,<3.15",
+  "pydantic>=2.14,<3",
+  "PyYAML>=6.0.2,<7",
+  "tzdata>=2025.2; sys_platform == 'win32'",
+]
+
+[project.urls]
+Source = "https://github.com/rrodrigoa/xp-libs-analytics"
+Issues = "https://github.com/rrodrigoa/xp-libs-analytics/issues"
+Documentation = "https://github.com/rrodrigoa/xp-libs-analytics/blob/main/README.md"
+
+[project.optional-dependencies]
+mcp = ["fastmcp>=4.1.6,<4.2"]
+agent-eval = ["inspect-ai==0.3.287", "openai==3.46.0", "fastmcp>=4.1.6,<4.2"]
+dev = [
+  "pytest>=8,<10",
+  "pytest-cov>=6,<8",
+  "pytest-asyncio>=1,<3",
+  "hypothesis>=6",
+  "ruff>=0.9",
+  "mypy>=1.15",
+  "build>=1.2",
+  "twine>=6",
+  "pip-audit>=2.8",
+  "types-PyYAML>=6",
+  "psutil>=7",
+]
+
+[project.scripts]
+xp-libs-analytics = "xp_libs_analytics.mcp.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/xp_libs_analytics"]
+
+[tool.hatch.build.targets.sdist]
+include = ["src/", "evals/", "skills/", "examples/", "tests/", "scripts/", "docs/", ".github/", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.md", "SECURITY.md", "CONTRIBUTING.md", "CHANGELOG.md", "requirements-lock.txt", ".coveragerc", "Dockerfile", ".dockerignore"]
+exclude = ["docs/evidence/", "evals/agent_skill/reports/"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"skills/generic-analytics" = "xp_libs_analytics/skills/generic-analytics"
+"examples/queries" = "xp_libs_analytics/skills/generic-analytics/examples/queries"
+"examples/README.md" = "xp_libs_analytics/skills/generic-analytics/examples/README.md"
+"docs/query-language.md" = "xp_libs_analytics/skills/generic-analytics/references/query-language-full.md"
+"docs/string-matching.md" = "xp_libs_analytics/skills/generic-analytics/references/string-matching-full.md"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["B009"] # Attribute lookup across disjoint typed predicate variants.
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*.py" = ["S101"]
+"tests/**/*.py" = ["S101"]
+"evals/agent_skill/generate.py" = ["E501"] # Human-readable scenario prompt templates.
+"src/xp_libs_analytics/models/__init__.py" = ["UP040"] # Eager aliases for recursive Pydantic schema stability.
+"scripts/*.py" = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+mypy_path = "src"
+
+[tool.pytest.ini_options]
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-ra --strict-markers -m 'not agent_eval_live'"
+testpaths = ["tests"]
+markers = [
+  "agent_eval_live: opt-in real LLM evaluations; excluded from standard CI",
+  "integration: MCP and end-to-end integration tests",
+  "security: security and penetration tests",
+  "slow: benchmarks, chaos or exhaustive fuzz tests",
+  "agent: agent correctness/evaluation tests",
+]

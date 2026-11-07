@@ -1,0 +1,3407 @@
+{
+  "$defs": {
+    "AbsoluteTime": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "start": {
+          "title": "Start",
+          "type": "string"
+        },
+        "end": {
+          "title": "End",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "start",
+        "end"
+      ],
+      "title": "AbsoluteTime",
+      "type": "object"
+    },
+    "And": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "and",
+          "title": "Op",
+          "type": "string"
+        },
+        "conditions": {
+          "items": {
+            "oneOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "and": "#/$defs/And",
+                    "between": "#/$defs/Between",
+                    "contains": "#/$defs/Contains",
+                    "ends_with": "#/$defs/EndsWith",
+                    "eq": "#/$defs/Eq",
+                    "fuzzy": "#/$defs/FuzzyPredicate",
+                    "gt": "#/$defs/Gt",
+                    "gte": "#/$defs/Gte",
+                    "ilike": "#/$defs/StringPredicate",
+                    "in": "#/$defs/In",
+                    "is_missing": "#/$defs/IsMissing",
+                    "is_not_null": "#/$defs/IsNotNull",
+                    "is_null": "#/$defs/IsNull",
+                    "is_present": "#/$defs/IsPresent",
+                    "like": "#/$defs/StringPredicate",
+                    "lt": "#/$defs/Lt",
+                    "lte": "#/$defs/Lte",
+                    "ne": "#/$defs/Ne",
+                    "not": "#/$defs/Not",
+                    "not_contains": "#/$defs/StringPredicate",
+                    "not_in": "#/$defs/NotIn",
+                    "or": "#/$defs/Or",
+                    "regex": "#/$defs/StringPredicate",
+                    "starts_with": "#/$defs/StartsWith",
+                    "word": "#/$defs/StringPredicate"
+                  },
+                  "propertyName": "op"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/Eq"
+                  },
+                  {
+                    "$ref": "#/$defs/Ne"
+                  },
+                  {
+                    "$ref": "#/$defs/Gt"
+                  },
+                  {
+                    "$ref": "#/$defs/Gte"
+                  },
+                  {
+                    "$ref": "#/$defs/Lt"
+                  },
+                  {
+                    "$ref": "#/$defs/Lte"
+                  },
+                  {
+                    "$ref": "#/$defs/In"
+                  },
+                  {
+                    "$ref": "#/$defs/NotIn"
+                  },
+                  {
+                    "$ref": "#/$defs/Between"
+                  },
+                  {
+                    "$ref": "#/$defs/IsNull"
+                  },
+                  {
+                    "$ref": "#/$defs/IsNotNull"
+                  },
+                  {
+                    "$ref": "#/$defs/IsMissing"
+                  },
+                  {
+                    "$ref": "#/$defs/IsPresent"
+                  },
+                  {
+                    "$ref": "#/$defs/Contains"
+                  },
+                  {
+                    "$ref": "#/$defs/StartsWith"
+                  },
+                  {
+                    "$ref": "#/$defs/EndsWith"
+                  },
+                  {
+                    "$ref": "#/$defs/StringPredicate"
+                  },
+                  {
+                    "$ref": "#/$defs/FuzzyPredicate"
+                  },
+                  {
+                    "$ref": "#/$defs/And"
+                  },
+                  {
+                    "$ref": "#/$defs/Or"
+                  },
+                  {
+                    "$ref": "#/$defs/Not"
+                  }
+                ]
+              },
+              {
+                "$ref": "#/$defs/MatchFieldsPredicate"
+              }
+            ]
+          },
+          "maxItems": 32,
+          "minItems": 2,
+          "title": "Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "conditions"
+      ],
+      "title": "And",
+      "type": "object"
+    },
+    "AvgAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "avg",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "AvgAggregate",
+      "type": "object"
+    },
+    "AvgIfAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "avg_if",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "where": {
+          "oneOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "and": "#/$defs/And",
+                  "between": "#/$defs/Between",
+                  "contains": "#/$defs/Contains",
+                  "ends_with": "#/$defs/EndsWith",
+                  "eq": "#/$defs/Eq",
+                  "fuzzy": "#/$defs/FuzzyPredicate",
+                  "gt": "#/$defs/Gt",
+                  "gte": "#/$defs/Gte",
+                  "ilike": "#/$defs/StringPredicate",
+                  "in": "#/$defs/In",
+                  "is_missing": "#/$defs/IsMissing",
+                  "is_not_null": "#/$defs/IsNotNull",
+                  "is_null": "#/$defs/IsNull",
+                  "is_present": "#/$defs/IsPresent",
+                  "like": "#/$defs/StringPredicate",
+                  "lt": "#/$defs/Lt",
+                  "lte": "#/$defs/Lte",
+                  "ne": "#/$defs/Ne",
+                  "not": "#/$defs/Not",
+                  "not_contains": "#/$defs/StringPredicate",
+                  "not_in": "#/$defs/NotIn",
+                  "or": "#/$defs/Or",
+                  "regex": "#/$defs/StringPredicate",
+                  "starts_with": "#/$defs/StartsWith",
+                  "word": "#/$defs/StringPredicate"
+                },
+                "propertyName": "op"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/Eq"
+                },
+                {
+                  "$ref": "#/$defs/Ne"
+                },
+                {
+                  "$ref": "#/$defs/Gt"
+                },
+                {
+                  "$ref": "#/$defs/Gte"
+                },
+                {
+                  "$ref": "#/$defs/Lt"
+                },
+                {
+                  "$ref": "#/$defs/Lte"
+                },
+                {
+                  "$ref": "#/$defs/In"
+                },
+                {
+                  "$ref": "#/$defs/NotIn"
+                },
+                {
+                  "$ref": "#/$defs/Between"
+                },
+                {
+                  "$ref": "#/$defs/IsNull"
+                },
+                {
+                  "$ref": "#/$defs/IsNotNull"
+                },
+                {
+                  "$ref": "#/$defs/IsMissing"
+                },
+                {
+                  "$ref": "#/$defs/IsPresent"
+                },
+                {
+                  "$ref": "#/$defs/Contains"
+                },
+                {
+                  "$ref": "#/$defs/StartsWith"
+                },
+                {
+                  "$ref": "#/$defs/EndsWith"
+                },
+                {
+                  "$ref": "#/$defs/StringPredicate"
+                },
+                {
+                  "$ref": "#/$defs/FuzzyPredicate"
+                },
+                {
+                  "$ref": "#/$defs/And"
+                },
+                {
+                  "$ref": "#/$defs/Or"
+                },
+                {
+                  "$ref": "#/$defs/Not"
+                }
+              ]
+            },
+            {
+              "$ref": "#/$defs/MatchFieldsPredicate"
+            }
+          ],
+          "title": "Where"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field",
+        "where"
+      ],
+      "title": "AvgIfAggregate",
+      "type": "object"
+    },
+    "Between": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "between",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lower"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "lower",
+        "upper"
+      ],
+      "title": "Between",
+      "type": "object"
+    },
+    "Cast": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "to": {
+          "enum": [
+            "float64",
+            "int64",
+            "string",
+            "datetime"
+          ],
+          "title": "To",
+          "type": "string"
+        },
+        "on_error": {
+          "enum": [
+            "reject",
+            "null"
+          ],
+          "title": "On Error",
+          "type": "string"
+        },
+        "format": {
+          "anyOf": [
+            {
+              "enum": [
+                "rfc3339",
+                "epoch_s",
+                "epoch_ms",
+                "epoch_us"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Format"
+        }
+      },
+      "required": [
+        "field",
+        "to",
+        "on_error"
+      ],
+      "title": "Cast",
+      "type": "object"
+    },
+    "Contains": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "contains",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Contains",
+      "type": "object"
+    },
+    "CountAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "count",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as"
+      ],
+      "title": "CountAggregate",
+      "type": "object"
+    },
+    "CountDistinctAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "count_distinct",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "CountDistinctAggregate",
+      "type": "object"
+    },
+    "CountIfAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "count_if",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "where": {
+          "oneOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "and": "#/$defs/And",
+                  "between": "#/$defs/Between",
+                  "contains": "#/$defs/Contains",
+                  "ends_with": "#/$defs/EndsWith",
+                  "eq": "#/$defs/Eq",
+                  "fuzzy": "#/$defs/FuzzyPredicate",
+                  "gt": "#/$defs/Gt",
+                  "gte": "#/$defs/Gte",
+                  "ilike": "#/$defs/StringPredicate",
+                  "in": "#/$defs/In",
+                  "is_missing": "#/$defs/IsMissing",
+                  "is_not_null": "#/$defs/IsNotNull",
+                  "is_null": "#/$defs/IsNull",
+                  "is_present": "#/$defs/IsPresent",
+                  "like": "#/$defs/StringPredicate",
+                  "lt": "#/$defs/Lt",
+                  "lte": "#/$defs/Lte",
+                  "ne": "#/$defs/Ne",
+                  "not": "#/$defs/Not",
+                  "not_contains": "#/$defs/StringPredicate",
+                  "not_in": "#/$defs/NotIn",
+                  "or": "#/$defs/Or",
+                  "regex": "#/$defs/StringPredicate",
+                  "starts_with": "#/$defs/StartsWith",
+                  "word": "#/$defs/StringPredicate"
+                },
+                "propertyName": "op"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/Eq"
+                },
+                {
+                  "$ref": "#/$defs/Ne"
+                },
+                {
+                  "$ref": "#/$defs/Gt"
+                },
+                {
+                  "$ref": "#/$defs/Gte"
+                },
+                {
+                  "$ref": "#/$defs/Lt"
+                },
+                {
+                  "$ref": "#/$defs/Lte"
+                },
+                {
+                  "$ref": "#/$defs/In"
+                },
+                {
+                  "$ref": "#/$defs/NotIn"
+                },
+                {
+                  "$ref": "#/$defs/Between"
+                },
+                {
+                  "$ref": "#/$defs/IsNull"
+                },
+                {
+                  "$ref": "#/$defs/IsNotNull"
+                },
+                {
+                  "$ref": "#/$defs/IsMissing"
+                },
+                {
+                  "$ref": "#/$defs/IsPresent"
+                },
+                {
+                  "$ref": "#/$defs/Contains"
+                },
+                {
+                  "$ref": "#/$defs/StartsWith"
+                },
+                {
+                  "$ref": "#/$defs/EndsWith"
+                },
+                {
+                  "$ref": "#/$defs/StringPredicate"
+                },
+                {
+                  "$ref": "#/$defs/FuzzyPredicate"
+                },
+                {
+                  "$ref": "#/$defs/And"
+                },
+                {
+                  "$ref": "#/$defs/Or"
+                },
+                {
+                  "$ref": "#/$defs/Not"
+                }
+              ]
+            },
+            {
+              "$ref": "#/$defs/MatchFieldsPredicate"
+            }
+          ],
+          "title": "Where"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "where"
+      ],
+      "title": "CountIfAggregate",
+      "type": "object"
+    },
+    "CountNonNullAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "count_non_null",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "CountNonNullAggregate",
+      "type": "object"
+    },
+    "Dataset": {
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "maxLength": 64,
+          "minLength": 1,
+          "pattern": "^[A-Za-z][A-Za-z0-9_-]*$",
+          "title": "Name",
+          "type": "string"
+        }
+      },
+      "required": [
+        "name"
+      ],
+      "title": "Dataset",
+      "type": "object"
+    },
+    "EndsWith": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "ends_with",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "EndsWith",
+      "type": "object"
+    },
+    "Eq": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "eq",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Eq",
+      "type": "object"
+    },
+    "FuzzyPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "fuzzy",
+          "title": "Op",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        },
+        "algorithm": {
+          "enum": [
+            "ratio",
+            "wratio",
+            "token_sort"
+          ],
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "min_score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Min Score",
+          "type": "number"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "value",
+        "algorithm",
+        "min_score",
+        "field"
+      ],
+      "title": "FuzzyPredicate",
+      "type": "object"
+    },
+    "FuzzyRule": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "fuzzy",
+          "title": "Op",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        },
+        "algorithm": {
+          "enum": [
+            "ratio",
+            "wratio",
+            "token_sort"
+          ],
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "min_score": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Min Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "op",
+        "value",
+        "algorithm",
+        "min_score"
+      ],
+      "title": "FuzzyRule",
+      "type": "object"
+    },
+    "Group": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field",
+        "as"
+      ],
+      "title": "Group",
+      "type": "object"
+    },
+    "Gt": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "gt",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Gt",
+      "type": "object"
+    },
+    "Gte": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "gte",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Gte",
+      "type": "object"
+    },
+    "HavingAnd": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "and",
+          "title": "Op",
+          "type": "string"
+        },
+        "conditions": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "and": "#/$defs/HavingAnd",
+                "between": "#/$defs/HavingBetween",
+                "eq": "#/$defs/HavingEq",
+                "gt": "#/$defs/HavingGt",
+                "gte": "#/$defs/HavingGte",
+                "is_not_null": "#/$defs/HavingIsNotNull",
+                "is_null": "#/$defs/HavingIsNull",
+                "lt": "#/$defs/HavingLt",
+                "lte": "#/$defs/HavingLte",
+                "ne": "#/$defs/HavingNe",
+                "not": "#/$defs/HavingNot",
+                "or": "#/$defs/HavingOr"
+              },
+              "propertyName": "op"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/HavingEq"
+              },
+              {
+                "$ref": "#/$defs/HavingNe"
+              },
+              {
+                "$ref": "#/$defs/HavingGt"
+              },
+              {
+                "$ref": "#/$defs/HavingGte"
+              },
+              {
+                "$ref": "#/$defs/HavingLt"
+              },
+              {
+                "$ref": "#/$defs/HavingLte"
+              },
+              {
+                "$ref": "#/$defs/HavingBetween"
+              },
+              {
+                "$ref": "#/$defs/HavingIsNull"
+              },
+              {
+                "$ref": "#/$defs/HavingIsNotNull"
+              },
+              {
+                "$ref": "#/$defs/HavingAnd"
+              },
+              {
+                "$ref": "#/$defs/HavingOr"
+              },
+              {
+                "$ref": "#/$defs/HavingNot"
+              }
+            ]
+          },
+          "maxItems": 32,
+          "minItems": 2,
+          "title": "Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "conditions"
+      ],
+      "title": "HavingAnd",
+      "type": "object"
+    },
+    "HavingBetween": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "between",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "lower": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Lower"
+        },
+        "upper": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Upper"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "lower",
+        "upper"
+      ],
+      "title": "HavingBetween",
+      "type": "object"
+    },
+    "HavingEq": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "eq",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "HavingEq",
+      "type": "object"
+    },
+    "HavingGt": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "gt",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "HavingGt",
+      "type": "object"
+    },
+    "HavingGte": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "gte",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "HavingGte",
+      "type": "object"
+    },
+    "HavingIsNotNull": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "is_not_null",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "field"
+      ],
+      "title": "HavingIsNotNull",
+      "type": "object"
+    },
+    "HavingIsNull": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "is_null",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "field"
+      ],
+      "title": "HavingIsNull",
+      "type": "object"
+    },
+    "HavingLt": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "lt",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "HavingLt",
+      "type": "object"
+    },
+    "HavingLte": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "lte",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "HavingLte",
+      "type": "object"
+    },
+    "HavingNe": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "ne",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "HavingNe",
+      "type": "object"
+    },
+    "HavingNot": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "not",
+          "title": "Op",
+          "type": "string"
+        },
+        "condition": {
+          "discriminator": {
+            "mapping": {
+              "and": "#/$defs/HavingAnd",
+              "between": "#/$defs/HavingBetween",
+              "eq": "#/$defs/HavingEq",
+              "gt": "#/$defs/HavingGt",
+              "gte": "#/$defs/HavingGte",
+              "is_not_null": "#/$defs/HavingIsNotNull",
+              "is_null": "#/$defs/HavingIsNull",
+              "lt": "#/$defs/HavingLt",
+              "lte": "#/$defs/HavingLte",
+              "ne": "#/$defs/HavingNe",
+              "not": "#/$defs/HavingNot",
+              "or": "#/$defs/HavingOr"
+            },
+            "propertyName": "op"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/HavingEq"
+            },
+            {
+              "$ref": "#/$defs/HavingNe"
+            },
+            {
+              "$ref": "#/$defs/HavingGt"
+            },
+            {
+              "$ref": "#/$defs/HavingGte"
+            },
+            {
+              "$ref": "#/$defs/HavingLt"
+            },
+            {
+              "$ref": "#/$defs/HavingLte"
+            },
+            {
+              "$ref": "#/$defs/HavingBetween"
+            },
+            {
+              "$ref": "#/$defs/HavingIsNull"
+            },
+            {
+              "$ref": "#/$defs/HavingIsNotNull"
+            },
+            {
+              "$ref": "#/$defs/HavingAnd"
+            },
+            {
+              "$ref": "#/$defs/HavingOr"
+            },
+            {
+              "$ref": "#/$defs/HavingNot"
+            }
+          ],
+          "title": "Condition"
+        }
+      },
+      "required": [
+        "op",
+        "condition"
+      ],
+      "title": "HavingNot",
+      "type": "object"
+    },
+    "HavingOr": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "or",
+          "title": "Op",
+          "type": "string"
+        },
+        "conditions": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "and": "#/$defs/HavingAnd",
+                "between": "#/$defs/HavingBetween",
+                "eq": "#/$defs/HavingEq",
+                "gt": "#/$defs/HavingGt",
+                "gte": "#/$defs/HavingGte",
+                "is_not_null": "#/$defs/HavingIsNotNull",
+                "is_null": "#/$defs/HavingIsNull",
+                "lt": "#/$defs/HavingLt",
+                "lte": "#/$defs/HavingLte",
+                "ne": "#/$defs/HavingNe",
+                "not": "#/$defs/HavingNot",
+                "or": "#/$defs/HavingOr"
+              },
+              "propertyName": "op"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/HavingEq"
+              },
+              {
+                "$ref": "#/$defs/HavingNe"
+              },
+              {
+                "$ref": "#/$defs/HavingGt"
+              },
+              {
+                "$ref": "#/$defs/HavingGte"
+              },
+              {
+                "$ref": "#/$defs/HavingLt"
+              },
+              {
+                "$ref": "#/$defs/HavingLte"
+              },
+              {
+                "$ref": "#/$defs/HavingBetween"
+              },
+              {
+                "$ref": "#/$defs/HavingIsNull"
+              },
+              {
+                "$ref": "#/$defs/HavingIsNotNull"
+              },
+              {
+                "$ref": "#/$defs/HavingAnd"
+              },
+              {
+                "$ref": "#/$defs/HavingOr"
+              },
+              {
+                "$ref": "#/$defs/HavingNot"
+              }
+            ]
+          },
+          "maxItems": 32,
+          "minItems": 2,
+          "title": "Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "conditions"
+      ],
+      "title": "HavingOr",
+      "type": "object"
+    },
+    "In": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "in",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "values"
+      ],
+      "title": "In",
+      "type": "object"
+    },
+    "IsMissing": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "is_missing",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "field"
+      ],
+      "title": "IsMissing",
+      "type": "object"
+    },
+    "IsNotNull": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "is_not_null",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "field"
+      ],
+      "title": "IsNotNull",
+      "type": "object"
+    },
+    "IsNull": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "is_null",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "field"
+      ],
+      "title": "IsNull",
+      "type": "object"
+    },
+    "IsPresent": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "is_present",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "field"
+      ],
+      "title": "IsPresent",
+      "type": "object"
+    },
+    "LiteralRule": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "enum": [
+            "eq",
+            "contains",
+            "not_contains",
+            "starts_with",
+            "ends_with",
+            "word",
+            "like",
+            "ilike",
+            "regex"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "value"
+      ],
+      "title": "LiteralRule",
+      "type": "object"
+    },
+    "Lt": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "lt",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Lt",
+      "type": "object"
+    },
+    "Lte": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "lte",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Lte",
+      "type": "object"
+    },
+    "MatchFields": {
+      "additionalProperties": false,
+      "properties": {
+        "fields": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Fields",
+          "type": "array"
+        },
+        "patterns": {
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "contains": "#/$defs/LiteralRule",
+                "ends_with": "#/$defs/LiteralRule",
+                "eq": "#/$defs/LiteralRule",
+                "fuzzy": "#/$defs/FuzzyRule",
+                "ilike": "#/$defs/LiteralRule",
+                "like": "#/$defs/LiteralRule",
+                "not_contains": "#/$defs/LiteralRule",
+                "regex": "#/$defs/LiteralRule",
+                "starts_with": "#/$defs/LiteralRule",
+                "word": "#/$defs/LiteralRule"
+              },
+              "propertyName": "op"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/LiteralRule"
+              },
+              {
+                "$ref": "#/$defs/FuzzyRule"
+              }
+            ]
+          },
+          "maxItems": 10,
+          "minItems": 1,
+          "title": "Patterns",
+          "type": "array"
+        },
+        "normalization": {
+          "$ref": "#/$defs/Normalization"
+        },
+        "mode": {
+          "const": "any",
+          "default": "any",
+          "title": "Mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "fields",
+        "patterns"
+      ],
+      "title": "MatchFields",
+      "type": "object"
+    },
+    "MatchFieldsPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "match": {
+          "$ref": "#/$defs/MatchFields"
+        }
+      },
+      "required": [
+        "match"
+      ],
+      "title": "MatchFieldsPredicate",
+      "type": "object"
+    },
+    "MatchingDetails": {
+      "additionalProperties": false,
+      "properties": {
+        "include": {
+          "default": false,
+          "title": "Include",
+          "type": "boolean"
+        },
+        "top_values": {
+          "default": 10,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Top Values",
+          "type": "integer"
+        },
+        "include_raw_values": {
+          "default": false,
+          "title": "Include Raw Values",
+          "type": "boolean"
+        }
+      },
+      "title": "MatchingDetails",
+      "type": "object"
+    },
+    "MaxAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "max",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "MaxAggregate",
+      "type": "object"
+    },
+    "MedianAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "median",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "MedianAggregate",
+      "type": "object"
+    },
+    "MinAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "min",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "MinAggregate",
+      "type": "object"
+    },
+    "MissingCountAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "missing_count",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "MissingCountAggregate",
+      "type": "object"
+    },
+    "Ne": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "ne",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "Ne",
+      "type": "object"
+    },
+    "Normalization": {
+      "additionalProperties": false,
+      "properties": {
+        "case_sensitive": {
+          "default": true,
+          "title": "Case Sensitive",
+          "type": "boolean"
+        },
+        "unicode": {
+          "default": "none",
+          "enum": [
+            "none",
+            "nfc",
+            "nfkc"
+          ],
+          "title": "Unicode",
+          "type": "string"
+        },
+        "trim": {
+          "default": false,
+          "title": "Trim",
+          "type": "boolean"
+        }
+      },
+      "title": "Normalization",
+      "type": "object"
+    },
+    "Not": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "not",
+          "title": "Op",
+          "type": "string"
+        },
+        "condition": {
+          "oneOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "and": "#/$defs/And",
+                  "between": "#/$defs/Between",
+                  "contains": "#/$defs/Contains",
+                  "ends_with": "#/$defs/EndsWith",
+                  "eq": "#/$defs/Eq",
+                  "fuzzy": "#/$defs/FuzzyPredicate",
+                  "gt": "#/$defs/Gt",
+                  "gte": "#/$defs/Gte",
+                  "ilike": "#/$defs/StringPredicate",
+                  "in": "#/$defs/In",
+                  "is_missing": "#/$defs/IsMissing",
+                  "is_not_null": "#/$defs/IsNotNull",
+                  "is_null": "#/$defs/IsNull",
+                  "is_present": "#/$defs/IsPresent",
+                  "like": "#/$defs/StringPredicate",
+                  "lt": "#/$defs/Lt",
+                  "lte": "#/$defs/Lte",
+                  "ne": "#/$defs/Ne",
+                  "not": "#/$defs/Not",
+                  "not_contains": "#/$defs/StringPredicate",
+                  "not_in": "#/$defs/NotIn",
+                  "or": "#/$defs/Or",
+                  "regex": "#/$defs/StringPredicate",
+                  "starts_with": "#/$defs/StartsWith",
+                  "word": "#/$defs/StringPredicate"
+                },
+                "propertyName": "op"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/Eq"
+                },
+                {
+                  "$ref": "#/$defs/Ne"
+                },
+                {
+                  "$ref": "#/$defs/Gt"
+                },
+                {
+                  "$ref": "#/$defs/Gte"
+                },
+                {
+                  "$ref": "#/$defs/Lt"
+                },
+                {
+                  "$ref": "#/$defs/Lte"
+                },
+                {
+                  "$ref": "#/$defs/In"
+                },
+                {
+                  "$ref": "#/$defs/NotIn"
+                },
+                {
+                  "$ref": "#/$defs/Between"
+                },
+                {
+                  "$ref": "#/$defs/IsNull"
+                },
+                {
+                  "$ref": "#/$defs/IsNotNull"
+                },
+                {
+                  "$ref": "#/$defs/IsMissing"
+                },
+                {
+                  "$ref": "#/$defs/IsPresent"
+                },
+                {
+                  "$ref": "#/$defs/Contains"
+                },
+                {
+                  "$ref": "#/$defs/StartsWith"
+                },
+                {
+                  "$ref": "#/$defs/EndsWith"
+                },
+                {
+                  "$ref": "#/$defs/StringPredicate"
+                },
+                {
+                  "$ref": "#/$defs/FuzzyPredicate"
+                },
+                {
+                  "$ref": "#/$defs/And"
+                },
+                {
+                  "$ref": "#/$defs/Or"
+                },
+                {
+                  "$ref": "#/$defs/Not"
+                }
+              ]
+            },
+            {
+              "$ref": "#/$defs/MatchFieldsPredicate"
+            }
+          ],
+          "title": "Condition"
+        }
+      },
+      "required": [
+        "op",
+        "condition"
+      ],
+      "title": "Not",
+      "type": "object"
+    },
+    "NotIn": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "not_in",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "values": {
+          "items": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "integer"
+              },
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "maxItems": 20,
+          "minItems": 1,
+          "title": "Values",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "values"
+      ],
+      "title": "NotIn",
+      "type": "object"
+    },
+    "NullCountAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "null_count",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "NullCountAggregate",
+      "type": "object"
+    },
+    "Options": {
+      "additionalProperties": false,
+      "properties": {
+        "include_empty_windows": {
+          "default": false,
+          "title": "Include Empty Windows",
+          "type": "boolean"
+        },
+        "matching_details": {
+          "$ref": "#/$defs/MatchingDetails"
+        }
+      },
+      "title": "Options",
+      "type": "object"
+    },
+    "Or": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "or",
+          "title": "Op",
+          "type": "string"
+        },
+        "conditions": {
+          "items": {
+            "oneOf": [
+              {
+                "discriminator": {
+                  "mapping": {
+                    "and": "#/$defs/And",
+                    "between": "#/$defs/Between",
+                    "contains": "#/$defs/Contains",
+                    "ends_with": "#/$defs/EndsWith",
+                    "eq": "#/$defs/Eq",
+                    "fuzzy": "#/$defs/FuzzyPredicate",
+                    "gt": "#/$defs/Gt",
+                    "gte": "#/$defs/Gte",
+                    "ilike": "#/$defs/StringPredicate",
+                    "in": "#/$defs/In",
+                    "is_missing": "#/$defs/IsMissing",
+                    "is_not_null": "#/$defs/IsNotNull",
+                    "is_null": "#/$defs/IsNull",
+                    "is_present": "#/$defs/IsPresent",
+                    "like": "#/$defs/StringPredicate",
+                    "lt": "#/$defs/Lt",
+                    "lte": "#/$defs/Lte",
+                    "ne": "#/$defs/Ne",
+                    "not": "#/$defs/Not",
+                    "not_contains": "#/$defs/StringPredicate",
+                    "not_in": "#/$defs/NotIn",
+                    "or": "#/$defs/Or",
+                    "regex": "#/$defs/StringPredicate",
+                    "starts_with": "#/$defs/StartsWith",
+                    "word": "#/$defs/StringPredicate"
+                  },
+                  "propertyName": "op"
+                },
+                "oneOf": [
+                  {
+                    "$ref": "#/$defs/Eq"
+                  },
+                  {
+                    "$ref": "#/$defs/Ne"
+                  },
+                  {
+                    "$ref": "#/$defs/Gt"
+                  },
+                  {
+                    "$ref": "#/$defs/Gte"
+                  },
+                  {
+                    "$ref": "#/$defs/Lt"
+                  },
+                  {
+                    "$ref": "#/$defs/Lte"
+                  },
+                  {
+                    "$ref": "#/$defs/In"
+                  },
+                  {
+                    "$ref": "#/$defs/NotIn"
+                  },
+                  {
+                    "$ref": "#/$defs/Between"
+                  },
+                  {
+                    "$ref": "#/$defs/IsNull"
+                  },
+                  {
+                    "$ref": "#/$defs/IsNotNull"
+                  },
+                  {
+                    "$ref": "#/$defs/IsMissing"
+                  },
+                  {
+                    "$ref": "#/$defs/IsPresent"
+                  },
+                  {
+                    "$ref": "#/$defs/Contains"
+                  },
+                  {
+                    "$ref": "#/$defs/StartsWith"
+                  },
+                  {
+                    "$ref": "#/$defs/EndsWith"
+                  },
+                  {
+                    "$ref": "#/$defs/StringPredicate"
+                  },
+                  {
+                    "$ref": "#/$defs/FuzzyPredicate"
+                  },
+                  {
+                    "$ref": "#/$defs/And"
+                  },
+                  {
+                    "$ref": "#/$defs/Or"
+                  },
+                  {
+                    "$ref": "#/$defs/Not"
+                  }
+                ]
+              },
+              {
+                "$ref": "#/$defs/MatchFieldsPredicate"
+              }
+            ]
+          },
+          "maxItems": 32,
+          "minItems": 2,
+          "title": "Conditions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "op",
+        "conditions"
+      ],
+      "title": "Or",
+      "type": "object"
+    },
+    "Order": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "direction": {
+          "default": "asc",
+          "enum": [
+            "asc",
+            "desc"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "nulls": {
+          "default": "last",
+          "enum": [
+            "first",
+            "last"
+          ],
+          "title": "Nulls",
+          "type": "string"
+        }
+      },
+      "required": [
+        "field"
+      ],
+      "title": "Order",
+      "type": "object"
+    },
+    "P50Aggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "p50",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "P50Aggregate",
+      "type": "object"
+    },
+    "P90Aggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "p90",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "P90Aggregate",
+      "type": "object"
+    },
+    "P95Aggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "p95",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "P95Aggregate",
+      "type": "object"
+    },
+    "P99Aggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "p99",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "P99Aggregate",
+      "type": "object"
+    },
+    "RatioIfAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "ratio_if",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "where": {
+          "oneOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "and": "#/$defs/And",
+                  "between": "#/$defs/Between",
+                  "contains": "#/$defs/Contains",
+                  "ends_with": "#/$defs/EndsWith",
+                  "eq": "#/$defs/Eq",
+                  "fuzzy": "#/$defs/FuzzyPredicate",
+                  "gt": "#/$defs/Gt",
+                  "gte": "#/$defs/Gte",
+                  "ilike": "#/$defs/StringPredicate",
+                  "in": "#/$defs/In",
+                  "is_missing": "#/$defs/IsMissing",
+                  "is_not_null": "#/$defs/IsNotNull",
+                  "is_null": "#/$defs/IsNull",
+                  "is_present": "#/$defs/IsPresent",
+                  "like": "#/$defs/StringPredicate",
+                  "lt": "#/$defs/Lt",
+                  "lte": "#/$defs/Lte",
+                  "ne": "#/$defs/Ne",
+                  "not": "#/$defs/Not",
+                  "not_contains": "#/$defs/StringPredicate",
+                  "not_in": "#/$defs/NotIn",
+                  "or": "#/$defs/Or",
+                  "regex": "#/$defs/StringPredicate",
+                  "starts_with": "#/$defs/StartsWith",
+                  "word": "#/$defs/StringPredicate"
+                },
+                "propertyName": "op"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/Eq"
+                },
+                {
+                  "$ref": "#/$defs/Ne"
+                },
+                {
+                  "$ref": "#/$defs/Gt"
+                },
+                {
+                  "$ref": "#/$defs/Gte"
+                },
+                {
+                  "$ref": "#/$defs/Lt"
+                },
+                {
+                  "$ref": "#/$defs/Lte"
+                },
+                {
+                  "$ref": "#/$defs/In"
+                },
+                {
+                  "$ref": "#/$defs/NotIn"
+                },
+                {
+                  "$ref": "#/$defs/Between"
+                },
+                {
+                  "$ref": "#/$defs/IsNull"
+                },
+                {
+                  "$ref": "#/$defs/IsNotNull"
+                },
+                {
+                  "$ref": "#/$defs/IsMissing"
+                },
+                {
+                  "$ref": "#/$defs/IsPresent"
+                },
+                {
+                  "$ref": "#/$defs/Contains"
+                },
+                {
+                  "$ref": "#/$defs/StartsWith"
+                },
+                {
+                  "$ref": "#/$defs/EndsWith"
+                },
+                {
+                  "$ref": "#/$defs/StringPredicate"
+                },
+                {
+                  "$ref": "#/$defs/FuzzyPredicate"
+                },
+                {
+                  "$ref": "#/$defs/And"
+                },
+                {
+                  "$ref": "#/$defs/Or"
+                },
+                {
+                  "$ref": "#/$defs/Not"
+                }
+              ]
+            },
+            {
+              "$ref": "#/$defs/MatchFieldsPredicate"
+            }
+          ],
+          "title": "Where"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field",
+        "where"
+      ],
+      "title": "RatioIfAggregate",
+      "type": "object"
+    },
+    "RelativeTime": {
+      "additionalProperties": false,
+      "properties": {
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "last_minutes": {
+          "maximum": 1440,
+          "minimum": 1,
+          "title": "Last Minutes",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "field",
+        "last_minutes"
+      ],
+      "title": "RelativeTime",
+      "type": "object"
+    },
+    "Sliding": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "sliding",
+          "title": "Type",
+          "type": "string"
+        },
+        "size": {
+          "title": "Size",
+          "type": "string"
+        },
+        "step": {
+          "title": "Step",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "size",
+        "step"
+      ],
+      "title": "Sliding",
+      "type": "object"
+    },
+    "StartsWith": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "starts_with",
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "integer"
+            },
+            {
+              "type": "number"
+            },
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Value"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "StartsWith",
+      "type": "object"
+    },
+    "StddevAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "stddev",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "StddevAggregate",
+      "type": "object"
+    },
+    "StringPredicate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "enum": [
+            "not_contains",
+            "word",
+            "like",
+            "ilike",
+            "regex"
+          ],
+          "title": "Op",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "value": {
+          "maxLength": 1024,
+          "minLength": 1,
+          "title": "Value",
+          "type": "string"
+        },
+        "normalization": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Normalization"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "op",
+        "field",
+        "value"
+      ],
+      "title": "StringPredicate",
+      "type": "object"
+    },
+    "SumAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "sum",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "SumAggregate",
+      "type": "object"
+    },
+    "SumIfAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "sum_if",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        },
+        "where": {
+          "oneOf": [
+            {
+              "discriminator": {
+                "mapping": {
+                  "and": "#/$defs/And",
+                  "between": "#/$defs/Between",
+                  "contains": "#/$defs/Contains",
+                  "ends_with": "#/$defs/EndsWith",
+                  "eq": "#/$defs/Eq",
+                  "fuzzy": "#/$defs/FuzzyPredicate",
+                  "gt": "#/$defs/Gt",
+                  "gte": "#/$defs/Gte",
+                  "ilike": "#/$defs/StringPredicate",
+                  "in": "#/$defs/In",
+                  "is_missing": "#/$defs/IsMissing",
+                  "is_not_null": "#/$defs/IsNotNull",
+                  "is_null": "#/$defs/IsNull",
+                  "is_present": "#/$defs/IsPresent",
+                  "like": "#/$defs/StringPredicate",
+                  "lt": "#/$defs/Lt",
+                  "lte": "#/$defs/Lte",
+                  "ne": "#/$defs/Ne",
+                  "not": "#/$defs/Not",
+                  "not_contains": "#/$defs/StringPredicate",
+                  "not_in": "#/$defs/NotIn",
+                  "or": "#/$defs/Or",
+                  "regex": "#/$defs/StringPredicate",
+                  "starts_with": "#/$defs/StartsWith",
+                  "word": "#/$defs/StringPredicate"
+                },
+                "propertyName": "op"
+              },
+              "oneOf": [
+                {
+                  "$ref": "#/$defs/Eq"
+                },
+                {
+                  "$ref": "#/$defs/Ne"
+                },
+                {
+                  "$ref": "#/$defs/Gt"
+                },
+                {
+                  "$ref": "#/$defs/Gte"
+                },
+                {
+                  "$ref": "#/$defs/Lt"
+                },
+                {
+                  "$ref": "#/$defs/Lte"
+                },
+                {
+                  "$ref": "#/$defs/In"
+                },
+                {
+                  "$ref": "#/$defs/NotIn"
+                },
+                {
+                  "$ref": "#/$defs/Between"
+                },
+                {
+                  "$ref": "#/$defs/IsNull"
+                },
+                {
+                  "$ref": "#/$defs/IsNotNull"
+                },
+                {
+                  "$ref": "#/$defs/IsMissing"
+                },
+                {
+                  "$ref": "#/$defs/IsPresent"
+                },
+                {
+                  "$ref": "#/$defs/Contains"
+                },
+                {
+                  "$ref": "#/$defs/StartsWith"
+                },
+                {
+                  "$ref": "#/$defs/EndsWith"
+                },
+                {
+                  "$ref": "#/$defs/StringPredicate"
+                },
+                {
+                  "$ref": "#/$defs/FuzzyPredicate"
+                },
+                {
+                  "$ref": "#/$defs/And"
+                },
+                {
+                  "$ref": "#/$defs/Or"
+                },
+                {
+                  "$ref": "#/$defs/Not"
+                }
+              ]
+            },
+            {
+              "$ref": "#/$defs/MatchFieldsPredicate"
+            }
+          ],
+          "title": "Where"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field",
+        "where"
+      ],
+      "title": "SumIfAggregate",
+      "type": "object"
+    },
+    "Tumbling": {
+      "additionalProperties": false,
+      "properties": {
+        "type": {
+          "const": "tumbling",
+          "title": "Type",
+          "type": "string"
+        },
+        "size": {
+          "title": "Size",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "size"
+      ],
+      "title": "Tumbling",
+      "type": "object"
+    },
+    "VarianceAggregate": {
+      "additionalProperties": false,
+      "properties": {
+        "op": {
+          "const": "variance",
+          "title": "Op",
+          "type": "string"
+        },
+        "as": {
+          "title": "As",
+          "type": "string"
+        },
+        "field": {
+          "title": "Field",
+          "type": "string"
+        }
+      },
+      "required": [
+        "op",
+        "as",
+        "field"
+      ],
+      "title": "VarianceAggregate",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "const": "analytics.query/v1",
+      "title": "Version",
+      "type": "string"
+    },
+    "dataset": {
+      "$ref": "#/$defs/Dataset"
+    },
+    "casts": {
+      "items": {
+        "$ref": "#/$defs/Cast"
+      },
+      "maxItems": 8,
+      "title": "Casts",
+      "type": "array"
+    },
+    "time_range": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/AbsoluteTime"
+        },
+        {
+          "$ref": "#/$defs/RelativeTime"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Time Range"
+    },
+    "filters": {
+      "items": {
+        "oneOf": [
+          {
+            "discriminator": {
+              "mapping": {
+                "and": "#/$defs/And",
+                "between": "#/$defs/Between",
+                "contains": "#/$defs/Contains",
+                "ends_with": "#/$defs/EndsWith",
+                "eq": "#/$defs/Eq",
+                "fuzzy": "#/$defs/FuzzyPredicate",
+                "gt": "#/$defs/Gt",
+                "gte": "#/$defs/Gte",
+                "ilike": "#/$defs/StringPredicate",
+                "in": "#/$defs/In",
+                "is_missing": "#/$defs/IsMissing",
+                "is_not_null": "#/$defs/IsNotNull",
+                "is_null": "#/$defs/IsNull",
+                "is_present": "#/$defs/IsPresent",
+                "like": "#/$defs/StringPredicate",
+                "lt": "#/$defs/Lt",
+                "lte": "#/$defs/Lte",
+                "ne": "#/$defs/Ne",
+                "not": "#/$defs/Not",
+                "not_contains": "#/$defs/StringPredicate",
+                "not_in": "#/$defs/NotIn",
+                "or": "#/$defs/Or",
+                "regex": "#/$defs/StringPredicate",
+                "starts_with": "#/$defs/StartsWith",
+                "word": "#/$defs/StringPredicate"
+              },
+              "propertyName": "op"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/Eq"
+              },
+              {
+                "$ref": "#/$defs/Ne"
+              },
+              {
+                "$ref": "#/$defs/Gt"
+              },
+              {
+                "$ref": "#/$defs/Gte"
+              },
+              {
+                "$ref": "#/$defs/Lt"
+              },
+              {
+                "$ref": "#/$defs/Lte"
+              },
+              {
+                "$ref": "#/$defs/In"
+              },
+              {
+                "$ref": "#/$defs/NotIn"
+              },
+              {
+                "$ref": "#/$defs/Between"
+              },
+              {
+                "$ref": "#/$defs/IsNull"
+              },
+              {
+                "$ref": "#/$defs/IsNotNull"
+              },
+              {
+                "$ref": "#/$defs/IsMissing"
+              },
+              {
+                "$ref": "#/$defs/IsPresent"
+              },
+              {
+                "$ref": "#/$defs/Contains"
+              },
+              {
+                "$ref": "#/$defs/StartsWith"
+              },
+              {
+                "$ref": "#/$defs/EndsWith"
+              },
+              {
+                "$ref": "#/$defs/StringPredicate"
+              },
+              {
+                "$ref": "#/$defs/FuzzyPredicate"
+              },
+              {
+                "$ref": "#/$defs/And"
+              },
+              {
+                "$ref": "#/$defs/Or"
+              },
+              {
+                "$ref": "#/$defs/Not"
+              }
+            ]
+          },
+          {
+            "$ref": "#/$defs/MatchFieldsPredicate"
+          }
+        ]
+      },
+      "maxItems": 20,
+      "title": "Filters",
+      "type": "array"
+    },
+    "window": {
+      "anyOf": [
+        {
+          "discriminator": {
+            "mapping": {
+              "sliding": "#/$defs/Sliding",
+              "tumbling": "#/$defs/Tumbling"
+            },
+            "propertyName": "type"
+          },
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Tumbling"
+            },
+            {
+              "$ref": "#/$defs/Sliding"
+            }
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Window"
+    },
+    "group_by": {
+      "items": {
+        "$ref": "#/$defs/Group"
+      },
+      "maxItems": 4,
+      "title": "Group By",
+      "type": "array"
+    },
+    "aggregations": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "avg": "#/$defs/AvgAggregate",
+            "avg_if": "#/$defs/AvgIfAggregate",
+            "count": "#/$defs/CountAggregate",
+            "count_distinct": "#/$defs/CountDistinctAggregate",
+            "count_if": "#/$defs/CountIfAggregate",
+            "count_non_null": "#/$defs/CountNonNullAggregate",
+            "max": "#/$defs/MaxAggregate",
+            "median": "#/$defs/MedianAggregate",
+            "min": "#/$defs/MinAggregate",
+            "missing_count": "#/$defs/MissingCountAggregate",
+            "null_count": "#/$defs/NullCountAggregate",
+            "p50": "#/$defs/P50Aggregate",
+            "p90": "#/$defs/P90Aggregate",
+            "p95": "#/$defs/P95Aggregate",
+            "p99": "#/$defs/P99Aggregate",
+            "ratio_if": "#/$defs/RatioIfAggregate",
+            "stddev": "#/$defs/StddevAggregate",
+            "sum": "#/$defs/SumAggregate",
+            "sum_if": "#/$defs/SumIfAggregate",
+            "variance": "#/$defs/VarianceAggregate"
+          },
+          "propertyName": "op"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/CountAggregate"
+          },
+          {
+            "$ref": "#/$defs/CountNonNullAggregate"
+          },
+          {
+            "$ref": "#/$defs/NullCountAggregate"
+          },
+          {
+            "$ref": "#/$defs/MissingCountAggregate"
+          },
+          {
+            "$ref": "#/$defs/CountDistinctAggregate"
+          },
+          {
+            "$ref": "#/$defs/SumAggregate"
+          },
+          {
+            "$ref": "#/$defs/AvgAggregate"
+          },
+          {
+            "$ref": "#/$defs/MinAggregate"
+          },
+          {
+            "$ref": "#/$defs/MaxAggregate"
+          },
+          {
+            "$ref": "#/$defs/MedianAggregate"
+          },
+          {
+            "$ref": "#/$defs/P50Aggregate"
+          },
+          {
+            "$ref": "#/$defs/P90Aggregate"
+          },
+          {
+            "$ref": "#/$defs/P95Aggregate"
+          },
+          {
+            "$ref": "#/$defs/P99Aggregate"
+          },
+          {
+            "$ref": "#/$defs/StddevAggregate"
+          },
+          {
+            "$ref": "#/$defs/VarianceAggregate"
+          },
+          {
+            "$ref": "#/$defs/CountIfAggregate"
+          },
+          {
+            "$ref": "#/$defs/SumIfAggregate"
+          },
+          {
+            "$ref": "#/$defs/AvgIfAggregate"
+          },
+          {
+            "$ref": "#/$defs/RatioIfAggregate"
+          }
+        ]
+      },
+      "maxItems": 20,
+      "minItems": 1,
+      "title": "Aggregations",
+      "type": "array"
+    },
+    "having": {
+      "items": {
+        "discriminator": {
+          "mapping": {
+            "and": "#/$defs/HavingAnd",
+            "between": "#/$defs/HavingBetween",
+            "eq": "#/$defs/HavingEq",
+            "gt": "#/$defs/HavingGt",
+            "gte": "#/$defs/HavingGte",
+            "is_not_null": "#/$defs/HavingIsNotNull",
+            "is_null": "#/$defs/HavingIsNull",
+            "lt": "#/$defs/HavingLt",
+            "lte": "#/$defs/HavingLte",
+            "ne": "#/$defs/HavingNe",
+            "not": "#/$defs/HavingNot",
+            "or": "#/$defs/HavingOr"
+          },
+          "propertyName": "op"
+        },
+        "oneOf": [
+          {
+            "$ref": "#/$defs/HavingEq"
+          },
+          {
+            "$ref": "#/$defs/HavingNe"
+          },
+          {
+            "$ref": "#/$defs/HavingGt"
+          },
+          {
+            "$ref": "#/$defs/HavingGte"
+          },
+          {
+            "$ref": "#/$defs/HavingLt"
+          },
+          {
+            "$ref": "#/$defs/HavingLte"
+          },
+          {
+            "$ref": "#/$defs/HavingBetween"
+          },
+          {
+            "$ref": "#/$defs/HavingIsNull"
+          },
+          {
+            "$ref": "#/$defs/HavingIsNotNull"
+          },
+          {
+            "$ref": "#/$defs/HavingAnd"
+          },
+          {
+            "$ref": "#/$defs/HavingOr"
+          },
+          {
+            "$ref": "#/$defs/HavingNot"
+          }
+        ]
+      },
+      "maxItems": 10,
+      "title": "Having",
+      "type": "array"
+    },
+    "order_by": {
+      "items": {
+        "$ref": "#/$defs/Order"
+      },
+      "maxItems": 4,
+      "title": "Order By",
+      "type": "array"
+    },
+    "limit": {
+      "default": 100,
+      "maximum": 500,
+      "minimum": 1,
+      "title": "Limit",
+      "type": "integer"
+    },
+    "options": {
+      "$ref": "#/$defs/Options"
+    }
+  },
+  "required": [
+    "version",
+    "dataset",
+    "aggregations"
+  ],
+  "title": "AnalyticsQuery",
+  "type": "object"
+}

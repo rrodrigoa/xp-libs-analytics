@@ -1,0 +1,7 @@
+# Rename to .github/CODEOWNERS and replace @ORG/TEAM with real authorized users/teams.
+# Do not leave a fake owner file in the active CODEOWNERS path.
+/src/xp_libs_analytics/engine/ @ORG/TEAM
+/src/xp_libs_analytics/policy/ @ORG/TEAM
+/src/xp_libs_analytics/errors/catalog.json @ORG/TEAM
+/.github/workflows/ @ORG/TEAM
+/pyproject.toml @ORG/TEAM

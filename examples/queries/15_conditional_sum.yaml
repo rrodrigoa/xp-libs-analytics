@@ -1,0 +1,13 @@
+# Example 15: Conditional sum for records satisfying a predicate.
+# The application registers the input records under the logical name example_data.
+version: analytics.query/v1
+dataset:
+  name: example_data
+aggregations:
+- op: sum_if
+  field: /value
+  where:
+    field: /status
+    op: eq
+    value: error
+  as: error_total

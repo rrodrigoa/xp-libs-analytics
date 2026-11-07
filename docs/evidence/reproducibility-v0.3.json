@@ -1,0 +1,12 @@
+[
+  {
+    "artifact": "xp_libs_analytics-0.3.0-py3-none-any.whl",
+    "sha256": "5d2de168852f9d179f836b28c0e04eaaf66547cbce5663427fd3f0b178740043",
+    "repeated_build_matches": true
+  },
+  {
+    "artifact": "xp_libs_analytics-0.3.0.tar.gz",
+    "sha256": "c4b30f0c43b65b7dd90c6d30a4e9e7505293945a24957ed6923822c759de5d29",
+    "repeated_build_matches": true
+  }
+]

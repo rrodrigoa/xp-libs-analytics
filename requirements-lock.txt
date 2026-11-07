@@ -42,7 +42,7 @@ fastmcp==4.1.6
 fastmcp-slim==4.1.6
 filelock==4.2.9
 frozenlist==1.8.0
-fsspec==2026.6.0
+fsspec==2026.9.0
 griffelib==2.4.1
 h11==0.16.0
 hatchling==1.33.0

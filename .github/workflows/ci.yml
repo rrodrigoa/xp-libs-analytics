@@ -40,7 +40,7 @@ jobs:
         with:
           python-version: ${{ matrix.python }}
       - run: python -m pip install -c requirements-lock.txt -e '.[dev,mcp,agent-eval]'
-      - run: pytest --cov=xp_libs_analytics --cov=evals.agent_skill --cov-branch --cov-report=json --cov-report=xml --cov-fail-under=90 --junitxml=junit.xml
+      - run: python -m pytest --cov=xp_libs_analytics --cov=evals.agent_skill --cov-branch --cov-report=json --cov-report=xml --cov-fail-under=90 --junitxml=junit.xml
       - run: python scripts/check_critical_coverage.py coverage.json
       - run: python examples/run_examples.py --lint-only
       - run: python examples/run_examples.py --all

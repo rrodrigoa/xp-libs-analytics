@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import multiprocessing as mp
 import os
+import sys
 from typing import Any, cast
 
 from xp_libs_analytics.engine.planner import LogicalPlan
@@ -12,7 +13,7 @@ from xp_libs_analytics.policy import Limits
 
 
 def restrict_process(limits: Limits) -> Any:
-    if os.name == "nt":
+    if sys.platform == "win32":
         import ctypes
         from ctypes import wintypes
 

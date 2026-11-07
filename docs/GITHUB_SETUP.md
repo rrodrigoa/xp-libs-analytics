@@ -2,7 +2,7 @@
 
 The workflows in this repository run on GitHub Actions. These account-level controls require a maintainer:
 
-1. Create/connect the repository; enable Actions, dependency alerts and private vulnerability reporting.
+1. Enable Actions and private vulnerability reporting. In Settings → Advanced Security, enable Dependency graph before requiring the `dependency-review` check, then enable Dependabot alerts. The Security workflow already provides advanced CodeQL setup.
 2. Set real maintainer identities in `.github/CODEOWNERS.template`, then rename it to CODEOWNERS.
 3. Protect main: reviewed PRs, resolved conversations, no force/direct pushes, required `lint-and-type`, OS/Python `tests` matrix, `build-smoke`, audit, CodeQL and dependency review checks. Include `merge_group` when using a merge queue.
 4. Configure `testpypi` and `pypi` protected environments, reviewer approval, trusted tag restrictions, and matching index OIDC Trusted Publishers.

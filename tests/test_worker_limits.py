@@ -36,7 +36,7 @@ def test_windows_job_api_enforces_memory_cpu_and_fails_closed(monkeypatch, failu
         GetCurrentProcess=Fn(456),
     )
     with monkeypatch.context() as m:
-        m.setattr(worker.os, "name", "nt")
+        m.setattr(worker.sys, "platform", "win32")
         m.setattr(ctypes, "WinDLL", lambda *args, **kwargs: kernel, raising=False)
         if failure:
             with pytest.raises(AnalyticsError) as caught:
@@ -58,7 +58,7 @@ def test_posix_rlimits(monkeypatch):
         RLIMIT_AS=1, RLIMIT_CPU=2, setrlimit=lambda key, bounds: calls.append((key, bounds))
     )
     with monkeypatch.context() as m:
-        m.setattr(worker.os, "name", "posix")
+        m.setattr(worker.sys, "platform", "linux")
         m.setattr(importlib, "import_module", lambda _: resource)
         assert restrict_process(Limits()) is None
     assert calls == [(1, (1024 * 1024 * 1024, 1024 * 1024 * 1024)), (2, (15, 15))]

@@ -11,7 +11,7 @@ python examples/run_examples.py --all
 
 `--lint-only` applies the restricted parser and strict Pydantic AST. `--all` additionally registers synthetic records, registers them under example_data, semantically validates and executes every query, and unregisters each binding. Runtime errors fail the runner.
 
-Each query is a complete document. `dataset.name: example_data` selects the logical name registered by the runner. You can run the same YAML unchanged after registering your own records as example_data. No internal ID is injected into YAML. Inputs are `data/events.json`, equivalent `events.ndjson`, `mixed_types.json`, and `matching_events.json`. Fields are illustrative discovered paths, never built-in business rules.
+Each query is a complete document. `dataset.name: example_data` selects the logical name registered by the runner. The same YAML can execute against any snapshot registered as `example_data` with compatible fields and types. The YAML uses the logical name throughout. Example inputs are `data/events.json`, its equivalent `events.ndjson`, `mixed_types.json`, and `matching_events.json`. The engine discovers their field paths from the admitted records.
 
 | Example | Behavior |
 |---|---|

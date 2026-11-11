@@ -18,7 +18,7 @@ For an Ollama deployment, install Ollama separately, start it with `ollama serve
 
 ## Supply connection settings only at runtime
 
-Set MODEL_ID in your process/shell to an installed native-tool-capable model ID. There is no model default.
+Set `MODEL_ID` in the evaluation process environment to identify an installed model with native tool support. The evaluation runner requires an explicit model ID.
 
 The CLI prompts for an API base URL if `--endpoint` is omitted. It never saves that answer. For example:
 
@@ -32,7 +32,7 @@ python -m evals.agent_skill.cli run --model "$MODEL_ID" --suite adversarial
 python -m evals.agent_skill.cli compare --model "$MODEL_ID" --scenario aggregate-count --repetitions 3
 ```
 
-To pass a runtime variable explicitly, use `--endpoint "$API_BASE"` in your shell. The variable's value is supplied by you, never stored in a config or `.env` file. An optional credential can be supplied through the process-only `XP_ANALYTICS_EVAL_API_KEY` environment variable; clear it after use. Shell history/process listings are controlled by your shell and OS; interactive prompting avoids putting the address in command history.
+Pass the endpoint at runtime with `--endpoint "$API_BASE"` or enter it at the interactive prompt. The prompt keeps the address out of command history. Supply any required credential through the process environment variable `XP_ANALYTICS_EVAL_API_KEY` and clear it after use.
 
 Other controls: `--seed`, `--temperature` (default zero), `--max-turns`, `--max-tool-calls`, `--timeout`, `--report`, `--compare-skill`, `--verbose`, and explicit `--traces` for redacted message traces. Runs are serial; concurrency defaults to one. Preflight checks model listing where available, native tool calling with a harmless echo tool, actual analytics MCP discovery, and skill references. It fails without silently emulating tools.
 

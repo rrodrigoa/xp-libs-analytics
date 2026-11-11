@@ -24,7 +24,7 @@
 ## 0.2.0 — local build
 
 - Rename the distribution/CLI to `xp-libs-analytics` and imports to `xp_libs_analytics`.
-- Preserve the independently usable YAML/analytics core and optional FastMCP adapter; add a bring-your-own-MCP example and import-isolation regression test.
+- Preserve the independently usable YAML analytics core and optional FastMCP adapter. Add a custom MCP adapter example and an import isolation regression test.
 - Add optional Inspect AI agent evaluations, deterministic scenario/oracle contracts, real MCP recovery seeding, semantic/result scorers, memory-only Inspect logs, sanitized reporting and skill/baseline comparison.
 - Add 105 synthetic scenarios and offline/live test separation. Live results are recorded separately from deterministic test evidence.
 

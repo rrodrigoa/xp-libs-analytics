@@ -1,6 +1,6 @@
 # Local verification: agent-analytics-mcp 0.1.0
 
-Recorded 2026-11-06T17:53:04.382140+00:00. No Git commit SHA exists: this folder is not a Git checkout. StreamSQL was not modified or needed.
+Recorded 2026-11-06T17:53:04.382140+00:00 from a local build before repository setup.
 
 ## Outcome and scope
 

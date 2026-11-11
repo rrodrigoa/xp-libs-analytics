@@ -121,7 +121,7 @@ def validation_tool(query_yaml: str) -> dict:
     return analytics.validate_query(query_yaml)
 ```
 
-Register those callables with your chosen server. Select the authorized execution context and identity in the host, enforce transport authentication, and use `isolated=True` for untrusted execution. The bundled FastMCP adapter is an optional convenience layer.
+A custom MCP adapter can register these callables. The host selects the authorized execution context and identity, enforces transport authentication, and uses `isolated=True` for untrusted execution. The library also includes an optional FastMCP adapter.
 
 ```sh
 xp-libs-analytics --help

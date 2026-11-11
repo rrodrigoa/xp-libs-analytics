@@ -1,6 +1,6 @@
 # Local verification: xp-libs-analytics 0.4.0
 
-Recorded November 6, 2026 (America/Los_Angeles). This is a local release candidate. Git HEAD is the original `e57a3d8` commit; the product changes are unstaged/uncommitted. No push, tag, hosted CI run or index upload occurred. StreamSQL was not modified. Historical verification is preserved in verification-v0.1.md through verification-v0.3.md.
+Recorded November 6, 2026 (America/Los_Angeles) from local validation of the 0.4.0 release candidate before its initial commit. Earlier evidence is in `verification-v0.1.md` through `verification-v0.3.md`.
 
 ## Implemented changes
 

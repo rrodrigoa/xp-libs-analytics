@@ -1,13 +1,13 @@
 ## Description and motivation
 
 ## Affected contracts / V1 operators / public API
-- [ ] Updated `QUERY_LANGUAGE_V1.md` / semantic version decision if applicable
+- [ ] Updated `docs/query-language.md` and reviewed versioning if the query contract changed
 - [ ] New/changed error codes and catalog parity (single `catalog.json`)
 - [ ] Updated agent skill and machine-valid examples if behavior changed
 
 ## Safety and threat model
 - [ ] No unsafe SQL/Python/UDF/network/file access introduced
-- [ ] Authorization and handle ownership unchanged or explicitly reviewed
+- [ ] Reviewed authorization and context-local dataset access
 - [ ] Resource budgets and input/output leakage considered
 - [ ] No real records/secrets in fixtures, logs or artifacts
 

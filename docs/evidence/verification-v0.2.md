@@ -1,6 +1,6 @@
 # Local verification: xp-libs-analytics 0.2.0
 
-Recorded 2026-11-06. Python 3.12.14 on Windows. This folder has no Git metadata; no commit, hosted CI result or public publication is claimed. StreamSQL was not modified. Historical initial-release evidence is in [verification-v0.1.md](verification-v0.1.md).
+Recorded 2026-11-06 from a local build using Python 3.12.14 on Windows. Earlier evidence is in [verification-v0.1.md](verification-v0.1.md).
 
 ## Delivered behavior
 

@@ -1,15 +1,15 @@
 # Security Policy
 
-This project executes analytical queries over potentially sensitive JSON records. Never open an issue containing real records, secrets, access tokens, personal information, proprietary schema, or cross-tenant dataset metadata.
+XP Libs Analytics executes analytical queries over potentially sensitive JSON records. Vulnerability reports should use synthetic records and omit secrets, access tokens, personal information, private schema, and cross-context dataset metadata.
 
 ## Reporting vulnerabilities
 
-After repository creation, configure a private GitHub security advisory reporting channel (Security → Advisories → Report a vulnerability) and specify an owner-maintained contact method here. **Do not invent or publish an unmonitored email address.** Until contact is configured, do not publish a public release claiming a formal security-response channel.
+Use the repository's private security advisory form (Security → Advisories → Report a vulnerability) when private reporting is available.
 
 ## Supported versions
 
-Document supported release branches once V1 ships. Security fixes require a new version; never overwrite PyPI artifacts.
+Security fixes are distributed as new package versions. The [changelog](CHANGELOG.md) records version-specific changes.
 
 ## Threat model priorities
 
-Cross-context name resolution and snapshot identity, agent/tool input injection, denial of service via large or recursive JSON, query amplification, type confusion and cast correctness, error/meta-data disclosure, malicious dependencies, wheel supply chain, and unauthorized output channels. Reference `docs/architecture.md` and `README.md`. Security claims require executed tests and review evidence.
+The library's threat model covers cross-context name resolution, snapshot identity, untrusted tool input, resource exhaustion, type and cast handling, metadata disclosure, dependency and package integrity, and unauthorized output. See the [end-to-end security review](docs/security-review.md) for controls and test evidence.

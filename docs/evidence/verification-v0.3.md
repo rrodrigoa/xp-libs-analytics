@@ -1,6 +1,6 @@
 # Local verification: xp-libs-analytics 0.3.0
 
-Recorded 2026-11-06. This is a breaking pre-1.0 release: only logical dataset names are supported. No Git metadata, hosted CI execution or publication is claimed. StreamSQL was not modified. Earlier evidence is retained in verification-v0.1.md and verification-v0.2.md.
+Recorded 2026-11-06 from local validation of 0.3.0, which requires logical dataset names. Earlier evidence is in [verification-v0.1.md](verification-v0.1.md) and [verification-v0.2.md](verification-v0.2.md).
 
 ## Implemented contract
 

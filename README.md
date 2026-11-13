@@ -64,7 +64,7 @@ Input accepts JSON objects, arrays of objects, NDJSON, or Python iterables of JS
 | Grouping | Up to four scalar dimensions; missing and explicit null groups remain separate |
 | Time | Explicit RFC3339/epoch casts, absolute or relative UTC ranges, epoch-aligned tumbling/sliding windows |
 | Results | HAVING, stable sorting, limit/truncation, strict JSON and quality/provenance evidence |
-| Errors | 73 catalog codes, one canonical packaged message catalog, safe diagnostic locations |
+| Errors | 79 catalog codes, one canonical packaged message catalog, safe diagnostic locations |
 
 See the [query language](docs/query-language.md), [examples](examples/README.md), and [agent skill](skills/generic-analytics/SKILL.md). `NO_DATA` reports absent matching observations. `INSUFFICIENT_DATA` applies the host's minimum sample policy. Unknown sampling cadence yields `coverage: UNKNOWN`; counts do not imply duration.
 
@@ -162,9 +162,17 @@ aggregations: [{op: count, as: rows}]
     server.run(transport="stdio")
 ```
 
-The client calls `analytics_query_by_key` with `{"key": "sum"}` and receives the standard analytics result or error. Keys are case-sensitive, start with an ASCII letter, and contain up to 64 ASCII letters, digits, underscores, or hyphens. A configured registry exposes two tools, `analytics_query_by_key` and `analytics_error_info`. The host distributes the allowed keys to clients. For HTTP, the host configures transport authentication and supplies a trusted context resolver that selects an engine with the registered datasets.
+The client calls `analytics_query_by_key` with `{"key": "sum"}` and receives the standard analytics result or error. Keys are case-sensitive, start with an ASCII letter, and contain up to 64 ASCII letters, digits, underscores, or hyphens. The host distributes the allowed keys to clients. For HTTP, the host configures transport authentication and supplies a trusted context resolver that selects an engine with the registered datasets.
 
 YAML entries use restricted parsing on each call. Typed entries and direct SDK calls to `engine.query_typed(sum_query)` bypass the analytics YAML parser. FastMCP independently imports PyYAML for its skill provider. Both query forms resolve the current dataset snapshot and run authorization, cost planning, and execution on each request.
+
+Registered queries can also accept a host-defined Pydantic parameter model. Use
+`ParameterizedYamlQuery` for fixed YAML or `PolarsQuery` for a trusted Polars
+transformation. Clients pass values as `{"key": "sum", "parameters": {"minimum": 3}}`
+and can retrieve the input schema with `analytics_describe_query`. Set
+`generated_tools=True` to expose each query as an `analytics_registered_<key>` tool
+with named arguments. See [registered query configuration](docs/registered-queries.md)
+and run `python -m examples.registered_queries` for an end-to-end example.
 
 ## Development and evidence
 

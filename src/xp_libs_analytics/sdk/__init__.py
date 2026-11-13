@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
-from collections.abc import Callable, Iterator
+from collections.abc import Callable, Iterator, Mapping
 from contextlib import AbstractContextManager, contextmanager
 from datetime import datetime
 from pathlib import Path
@@ -15,12 +15,24 @@ from uuid import uuid4
 from pydantic import ValidationError
 from pydantic_core import PydanticSerializationError
 
+from xp_libs_analytics.engine.native import (
+    NativeWorkerRequest,
+    PolarsQuery,
+    PolarsTransform,
+    execute_native,
+    import_reference,
+    native_fingerprint,
+    prepare_native,
+)
 from xp_libs_analytics.engine.planner import LogicalPlan, plan_query
 from xp_libs_analytics.errors import CATALOG, AnalyticsError
 from xp_libs_analytics.ingest import DatasetStore, Snapshot, utc_now
 from xp_libs_analytics.models import AGG_OPS, FILTER_OPS, AnalyticsQuery, parse_query
 from xp_libs_analytics.policy import Limits, Principal
+from xp_libs_analytics.registered import ParameterizedYamlQuery, validate_parameters
 from xp_libs_analytics.registry import DatasetInfo, DatasetRegistry
+
+type Execution = tuple[str, str, Snapshot, datetime, Callable[[], dict[str, Any]]]
 
 
 def _validated_query_copy(query: AnalyticsQuery) -> AnalyticsQuery:
@@ -44,6 +56,7 @@ class AnalyticsEngine:
         clock: Callable[[], datetime] = utc_now,
         isolated: bool = False,
         telemetry: Callable[[dict[str, Any]], None] | None = None,
+        native_transforms: Mapping[str, PolarsTransform] | None = None,
     ) -> None:
         self.limits = limits or Limits()
         self.principal = principal or Principal()
@@ -52,6 +65,10 @@ class AnalyticsEngine:
         self.clock = clock
         self.isolated = isolated
         self.telemetry = telemetry
+        self._native_transforms = {
+            name: (transform, import_reference(transform))
+            for name, transform in (native_transforms or {}).items()
+        }
         request_budget = self.store.request_budget(self.principal)
         self._slots = request_budget.slots
         self._calls = request_budget.calls
@@ -87,7 +104,7 @@ class AnalyticsEngine:
 
     def create_context(self) -> AnalyticsEngine:
         """Create an independent namespace with shared host resource/owner budgets."""
-        return AnalyticsEngine(
+        context = AnalyticsEngine(
             limits=self.limits,
             principal=self.principal,
             store=self.store,
@@ -95,18 +112,14 @@ class AnalyticsEngine:
             isolated=self.isolated,
             telemetry=self.telemetry,
         )
+        context._native_transforms = self._native_transforms
+        return context
 
     def _authorized_view(self, principal: Principal) -> AnalyticsEngine:
         if principal.id != self.principal.id:
             raise AnalyticsError("ACCESS_DENIED")
-        view = AnalyticsEngine(
-            limits=self.limits,
-            principal=principal,
-            store=self.store,
-            clock=self.clock,
-            isolated=self.isolated,
-            telemetry=self.telemetry,
-        )
+        view = self.create_context()
+        view.principal = principal
         view.registry = DatasetRegistry(
             self.store,
             lambda: view.principal,
@@ -190,11 +203,94 @@ class AnalyticsEngine:
             self._calls.append(now)
 
     def query_yaml(self, query_yaml: str) -> dict[str, Any]:
-        return self._execute(lambda: self._prepare(query_yaml))
+        return self._execute(lambda: self._logical_execution(self._prepare(query_yaml)))
 
     def query_typed(self, query: AnalyticsQuery) -> dict[str, Any]:
         """Execute a host-authored query definition through the snapshot planner."""
-        return self._execute(lambda: self._plan(self._bounded_typed_query(query)))
+        return self._execute(
+            lambda: self._logical_execution(self._plan(self._bounded_typed_query(query)))
+        )
+
+    def query_parameterized(
+        self, query: ParameterizedYamlQuery, parameters: Mapping[str, Any] | None = None
+    ) -> dict[str, Any]:
+        """Bind host-approved YAML value slots and execute the resulting query."""
+        return self._execute(
+            lambda: self._logical_execution(
+                self._plan(self._bounded_typed_query(query.bind(parameters, self.limits)))
+            )
+        )
+
+    def query_polars(
+        self, query: PolarsQuery, parameters: Mapping[str, Any] | None = None
+    ) -> dict[str, Any]:
+        """Execute a trusted transformation over an authorized snapshot projection."""
+        return self._execute(lambda: self._native_execution(query, parameters))
+
+    @contextmanager
+    def _native_execution(
+        self, query: PolarsQuery, parameters: Mapping[str, Any] | None
+    ) -> Iterator[Execution]:
+        with self.registry.snapshot(query.dataset) as snapshot:
+            validated, raw_parameters = validate_parameters(
+                query.parameters, parameters, self.limits
+            )
+            now = self.clock()
+            plan = prepare_native(query, snapshot, self.principal, self.limits)
+            if self.isolated:
+                from xp_libs_analytics.engine.worker import execute_isolated
+
+                reference = next(
+                    (ref for fn, ref in self._native_transforms.values() if fn is query.transform),
+                    None,
+                )
+                if reference is None:
+                    raise AnalyticsError("QUERY_NATIVE_ISOLATION_INVALID")
+                try:
+                    model_ref = import_reference(query.parameters)
+                except ValueError:
+                    raise AnalyticsError("QUERY_NATIVE_ISOLATION_INVALID") from None
+                request = NativeWorkerRequest(
+                    plan,
+                    reference,
+                    model_ref,
+                    raw_parameters,
+                )
+
+                def execute() -> dict[str, Any]:
+                    return execute_isolated(request, self.limits)
+            else:
+
+                def execute() -> dict[str, Any]:
+                    return execute_native(plan, query.transform, validated, self.limits)
+
+            yield query.dataset, native_fingerprint(query), snapshot, now, execute
+
+    @contextmanager
+    def _logical_execution(
+        self, prepare: AbstractContextManager[tuple[LogicalPlan, Snapshot, datetime]]
+    ) -> Iterator[Execution]:
+        with prepare as (plan, snapshot, now):
+            backend: Callable[[LogicalPlan, Limits], dict[str, Any]]
+            if (
+                self.isolated
+                or self.limits.force_matching_isolation
+                and json.loads(plan.matching_cost_json).get("requires_isolation")
+            ):
+                from xp_libs_analytics.engine.worker import execute_isolated
+
+                backend = execute_isolated
+            else:
+                from xp_libs_analytics.engine.backend import execute_plan
+
+                backend = execute_plan
+            yield (
+                json.loads(plan.query_json)["dataset"]["name"],
+                plan.fingerprint,
+                snapshot,
+                now,
+                lambda: backend(plan, self.limits),
+            )
 
     def _bounded_typed_query(self, query: AnalyticsQuery) -> AnalyticsQuery:
         validated = _validated_query_copy(query)
@@ -206,9 +302,7 @@ class AnalyticsEngine:
             raise AnalyticsError("QUERY_TOO_EXPENSIVE")
         return validated
 
-    def _execute(
-        self, prepare: Callable[[], AbstractContextManager[tuple[LogicalPlan, Snapshot, datetime]]]
-    ) -> dict[str, Any]:
+    def _execute(self, prepare: Callable[[], AbstractContextManager[Execution]]) -> dict[str, Any]:
         query_id = uuid4().hex
         started = monotonic()
         event: dict[str, Any] = {
@@ -223,27 +317,16 @@ class AnalyticsEngine:
             acquired = self._slots.acquire(blocking=False)
             if not acquired:
                 raise AnalyticsError("RESOURCE_CONCURRENCY_LIMIT")
-            with prepare() as (plan, snapshot, now):
-                event["plan_fingerprint"] = plan.fingerprint
+            with prepare() as (dataset, fingerprint, snapshot, now, execute):
+                event["plan_fingerprint"] = fingerprint
                 event["snapshot_id"] = snapshot.handle.id
                 event["snapshot_revision"] = snapshot.handle.revision
-                if (
-                    self.isolated
-                    or self.limits.force_matching_isolation
-                    and json.loads(plan.matching_cost_json).get("requires_isolation")
-                ):
-                    from xp_libs_analytics.engine.worker import execute_isolated
-
-                    result = execute_isolated(plan, self.limits)
-                else:
-                    from xp_libs_analytics.engine.backend import execute_plan
-
-                    result = execute_plan(plan, self.limits)
+                result = execute()
                 result.update(
                     version="analytics.result/v1",
                     query_id=query_id,
                     dataset={
-                        "name": json.loads(plan.query_json)["dataset"]["name"],
+                        "name": dataset,
                         "revision": snapshot.handle.revision,
                     },
                 )

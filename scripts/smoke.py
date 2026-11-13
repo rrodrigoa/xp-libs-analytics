@@ -6,7 +6,9 @@ from dataclasses import replace
 from importlib.metadata import distribution
 from importlib.resources import files
 
-from xp_libs_analytics import AnalyticsEngine
+from pydantic import BaseModel
+
+from xp_libs_analytics import AnalyticsEngine, ParameterizedYamlQuery
 
 assert "fastmcp" not in sys.modules
 assert any(
@@ -14,7 +16,7 @@ assert any(
     for p in distribution("xp-libs-analytics").files
 )
 catalog = json.loads(files("xp_libs_analytics.errors").joinpath("catalog.json").read_text())
-assert len(catalog) == 73
+assert len(catalog) == 79
 bundle = files("xp_libs_analytics").joinpath("skills/generic-analytics")
 assert bundle.joinpath("SKILL.md").is_file()
 assert bundle.joinpath("references/query-language-full.md").is_file()
@@ -22,6 +24,22 @@ assert bundle.joinpath("references/string-matching-full.md").is_file()
 assert bundle.joinpath("examples/queries/01_count_all.yaml").is_file()
 assert len(list(bundle.joinpath("examples/queries").iterdir())) == 28
 engine = AnalyticsEngine()
+
+
+class Parameters(BaseModel):
+    minimum: int = 1
+
+
+engine.register_records("registered_smoke", [{"value": 0}, {"value": 2}])
+registered = ParameterizedYamlQuery(
+    """version: analytics.query/v1
+dataset: {name: registered_smoke}
+filters: [{field: /value, op: gte, value: {$param: minimum}}]
+aggregations: [{op: count, as: rows}]
+""",
+    Parameters,
+)
+assert engine.query_parameterized(registered)["rows"] == [{"rows": 1}]
 handle = engine.register_records("dataset_1", [{"x": 2}, {"x": 4}, {}])
 text = f"""version: analytics.query/v1
 dataset: {{name: {handle.name}}}

@@ -33,7 +33,11 @@ async def test_registered_paths_use_current_snapshot_and_capture_definitions(eng
     queries.clear()
     typed.aggregations.clear()
     async with Client(server) as client:
-        assert {tool.name for tool in await client.list_tools()} == {TOOL, "analytics_error_info"}
+        assert {tool.name for tool in await client.list_tools()} == {
+            TOOL,
+            "analytics_describe_query",
+            "analytics_error_info",
+        }
         assert await client.list_resources() == []
         assert (await call(client, {"code": "ACCESS_DENIED"}, "analytics_error_info"))[
             "code"

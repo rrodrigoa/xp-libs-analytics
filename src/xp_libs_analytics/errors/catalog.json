@@ -1,4 +1,10 @@
 {
+  "QUERY_PARAMETERS_INVALID": "Query parameters do not match the registered schema. Fix: send only declared parameters with the required types. Example: send a JSON integer for an integer parameter.",
+  "QUERY_PARAMETERS_LIMIT": "Query parameters exceed the configured size or complexity limit. Fix: reduce the parameter payload. Example: send a shorter list of filter values.",
+  "QUERY_PARAMETER_BINDING_INVALID": "A registered YAML parameter could not bind to a supported query value. Fix: check the host template and parameter model. Example: bind a declared integer parameter to a numeric predicate value.",
+  "QUERY_NATIVE_INPUT_INVALID": "A projected field does not have a supported scalar type. Fix: select a scalar JSON Pointer in the host definition. Example: project /reading/value for a numeric leaf.",
+  "QUERY_NATIVE_RESULT_INVALID": "The transformation result does not match the registered output schema or JSON value contract. Fix: return a DataFrame with the declared columns and types. Example: cast a count column to Int64 when its declared type is integer.",
+  "QUERY_NATIVE_ISOLATION_INVALID": "The isolated transformation or its parameter model is unavailable in the host configuration. Fix: use importable module-level definitions and register the transformation in the host. Example: include the module-level count function in native_transforms.",
   "INPUT_INVALID_JSON": "Input is not valid JSON. Fix: supply one JSON object, an array of objects, or newline-delimited JSON objects. Example: [{\"value\":12},{\"value\":15}]",
   "INPUT_INVALID_NDJSON": "One or more nonblank NDJSON lines is not a valid JSON object. Fix: put exactly one object on each line. Example: {\"value\":12} followed by a newline and {\"value\":15}.",
   "INPUT_DUPLICATE_KEY": "A JSON object contains a repeated property name; accepting it could change query meaning. Fix: retain only one occurrence of each key. Example: {\"value\":12}, not {\"value\":12,\"value\":15}.",

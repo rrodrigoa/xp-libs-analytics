@@ -44,6 +44,7 @@ jobs:
       - run: python scripts/check_critical_coverage.py coverage.json
       - run: python examples/run_examples.py --lint-only
       - run: python examples/run_examples.py --all
+      - run: python -m examples.registered_queries
       - run: python scripts/resource_probe.py
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         if: always()

@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "xp-libs-analytics"
-version = "0.4.0"
+version = "0.5.0"
 description = "Schema-on-read, in-memory analytics for agent-generated YAML queries"
 readme = "README.md"
 requires-python = ">=3.12"

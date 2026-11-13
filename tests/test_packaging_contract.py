@@ -17,7 +17,7 @@ def test_catalog_contract():
         files("xp_libs_analytics.errors").joinpath("catalog.json").read_text(),
         object_pairs_hook=no_duplicates,
     )
-    assert len(catalog) == 73
+    assert len(catalog) == 79
     assert set(catalog) == {code.value for code in ErrorCode}
     for code, message in catalog.items():
         assert code == code.upper() and code.replace("_", "").isalnum()

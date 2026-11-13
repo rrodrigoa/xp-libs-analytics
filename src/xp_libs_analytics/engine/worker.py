@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
+import json
 import multiprocessing as mp
 import os
 import sys
 from typing import Any, cast
 
+from xp_libs_analytics.engine.native import NativeWorkerRequest
 from xp_libs_analytics.engine.planner import LogicalPlan
 from xp_libs_analytics.errors import AnalyticsError
 from xp_libs_analytics.policy import Limits
@@ -81,26 +83,33 @@ def restrict_process(limits: Limits) -> Any:
     return None
 
 
-def run_worker(connection: Any, plan: LogicalPlan, limits: Limits) -> None:
+def run_worker(connection: Any, plan: LogicalPlan | NativeWorkerRequest, limits: Limits) -> None:
     os.environ["POLARS_MAX_THREADS"] = "2"
     try:
         job_handle = restrict_process(limits)
-        from xp_libs_analytics.engine.backend import execute_plan
+        if isinstance(plan, NativeWorkerRequest):
+            result = plan.execute(limits)
+        else:
+            from xp_libs_analytics.engine.backend import execute_plan
 
-        result = execute_plan(plan, limits)
-        connection.send(result)
+            result = execute_plan(plan, limits)
         del job_handle
     except MemoryError:
-        connection.send(AnalyticsError("RESOURCE_MEMORY_LIMIT").envelope())
+        result = AnalyticsError("RESOURCE_MEMORY_LIMIT").envelope()
     except AnalyticsError as exc:
-        connection.send(exc.envelope())
+        result = exc.envelope()
     except Exception:
-        connection.send(AnalyticsError("EXECUTION_BACKEND_ERROR").envelope())
+        result = AnalyticsError("EXECUTION_BACKEND_ERROR").envelope()
+    try:
+        if isinstance(plan, NativeWorkerRequest):
+            connection.send_bytes(json.dumps(result, allow_nan=False).encode("utf-8"))
+        else:
+            connection.send(result)
     finally:
         connection.close()
 
 
-def execute_isolated(plan: LogicalPlan, limits: Limits) -> dict[str, Any]:
+def execute_isolated(plan: LogicalPlan | NativeWorkerRequest, limits: Limits) -> dict[str, Any]:
     context = mp.get_context("spawn")
     receiver, sender = context.Pipe(duplex=False)
     process = context.Process(target=run_worker, args=(sender, plan, limits), daemon=True)
@@ -110,6 +119,11 @@ def execute_isolated(plan: LogicalPlan, limits: Limits) -> dict[str, Any]:
         try:
             if not receiver.poll(limits.timeout_seconds):
                 raise AnalyticsError("RESOURCE_TIMEOUT")
+            if isinstance(plan, NativeWorkerRequest):
+                return cast(
+                    dict[str, Any],
+                    json.loads(receiver.recv_bytes(max(4096, limits.max_result_bytes + 4096))),
+                )
             return cast(dict[str, Any], receiver.recv())
         except (EOFError, BrokenPipeError):
             raise AnalyticsError("EXECUTION_BACKEND_ERROR") from None

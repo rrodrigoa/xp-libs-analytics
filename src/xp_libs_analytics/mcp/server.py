@@ -12,8 +12,17 @@ from typing import Any, cast
 from uuid import uuid4
 
 from xp_libs_analytics import AnalyticsEngine, AnalyticsError, AnalyticsQuery, Limits, Principal
+from xp_libs_analytics.engine.native import PolarsQuery
 from xp_libs_analytics.ingest import DatasetStore
+from xp_libs_analytics.registered import ParameterizedYamlQuery, parameter_schema
 from xp_libs_analytics.sdk import _validated_query_copy
+
+type RegisteredQuery = str | AnalyticsQuery | ParameterizedYamlQuery | PolarsQuery
+_EMPTY_PARAMETERS: dict[str, Any] = {
+    "type": "object",
+    "properties": {},
+    "additionalProperties": False,
+}
 
 
 def _valid_query_key(key: str) -> bool:
@@ -21,13 +30,17 @@ def _valid_query_key(key: str) -> bool:
 
 
 def _copy_registered_queries(
-    queries: Mapping[str, str | AnalyticsQuery],
-) -> dict[str, str | AnalyticsQuery]:
-    registered: dict[str, str | AnalyticsQuery] = {}
+    queries: Mapping[str, RegisteredQuery],
+) -> dict[str, RegisteredQuery]:
+    registered: dict[str, RegisteredQuery] = {}
     for key, query in queries.items():
         if not _valid_query_key(key):
             raise ValueError("Invalid registered query key")
-        registered[key] = query if isinstance(query, str) else _validated_query_copy(query)
+        registered[key] = (
+            query
+            if isinstance(query, (str, ParameterizedYamlQuery, PolarsQuery))
+            else _validated_query_copy(query)
+        )
     return registered
 
 
@@ -37,15 +50,19 @@ def create_server(
     uploads: bool = False,
     principal_resolver: Callable[[], Principal] | None = None,
     context_resolver: Callable[[], AnalyticsEngine] | None = None,
-    registered_queries: Mapping[str, str | AnalyticsQuery] | None = None,
+    registered_queries: Mapping[str, RegisteredQuery] | None = None,
+    generated_tools: bool = False,
 ) -> Any:
     from fastmcp import FastMCP
     from fastmcp.server.dependencies import get_context
     from fastmcp.server.middleware import Middleware
-    from fastmcp.tools.base import ToolResult
+    from fastmcp.tools.base import Tool, ToolResult
+    from starlette.concurrency import run_in_threadpool
 
     if registered_queries is not None and uploads:
         raise ValueError("Uploads are unavailable in key-only mode")
+    if generated_tools and registered_queries is None:
+        raise ValueError("Generated tools require registered queries")
     registered = (
         _copy_registered_queries(registered_queries) if registered_queries is not None else None
     )
@@ -111,7 +128,7 @@ def create_server(
 
         return invoke
 
-    tool_args = {
+    tool_args: dict[str, dict[str, type[Any]]] = {
         "analytics_capabilities": {},
         "analytics_list_datasets": {},
         "analytics_load_json": {"name": str, "data": str},
@@ -122,14 +139,23 @@ def create_server(
         "analytics_unregister_dataset": {"name": str},
         "analytics_error_info": {"code": str},
     }
+    generated_names: set[str] = set()
     if registered is not None:
-        tool_args = {"analytics_query_by_key": {"key": str}, "analytics_error_info": {"code": str}}
+        tool_args = {
+            "analytics_query_by_key": {"key": str},
+            "analytics_describe_query": {"key": str},
+            "analytics_error_info": {"code": str},
+        }
 
     class ErrorBoundary(Middleware):
         async def on_call_tool(self, context: Any, call_next: Any) -> Any:
             try:
                 expected = tool_args.get(context.message.name)
                 arguments = context.message.arguments or {}
+                if context.message.name in generated_names:
+                    return await call_next(context)
+                if context.message.name == "analytics_query_by_key" and "parameters" in arguments:
+                    expected = {"key": str, "parameters": dict}
                 if (
                     expected is None
                     or set(arguments) != set(expected)
@@ -152,20 +178,72 @@ def create_server(
 
     if registered is not None:
         queries = registered
+        schemas = {
+            key: parameter_schema(query.parameters)
+            if isinstance(query, (ParameterizedYamlQuery, PolarsQuery))
+            else _EMPTY_PARAMETERS
+            for key, query in queries.items()
+        }
 
-        @server.tool
-        @guarded
-        def analytics_query_by_key(key: str) -> ToolResult:
-            """Execute a registered query in the authorized context."""
+        def resolve(key: str) -> tuple[AnalyticsEngine, RegisteredQuery]:
             if not _valid_query_key(key):
                 raise AnalyticsError("MCP_INVALID_TOOL_CALL")
             current = service()
             query = queries.get(key)
             if query is None:
                 raise AnalyticsError("ACCESS_DENIED")
+            return current, query
+
+        @guarded
+        def execute(key: str, parameters: dict[str, Any] | None) -> ToolResult:
+            current, query = resolve(key)
+            if isinstance(query, ParameterizedYamlQuery):
+                return reply(current.query_parameterized(query, parameters))
+            if isinstance(query, PolarsQuery):
+                return reply(current.query_polars(query, parameters))
+            if parameters:
+                raise AnalyticsError("QUERY_PARAMETERS_INVALID")
             return reply(
                 current.query_yaml(query) if isinstance(query, str) else current.query_typed(query)
             )
+
+        @server.tool
+        def analytics_query_by_key(
+            key: str, parameters: dict[str, Any] | None = None
+        ) -> ToolResult:
+            """Execute a registered query with its approved parameter values."""
+            return cast(ToolResult, execute(key, parameters))
+
+        @server.tool
+        @guarded
+        def analytics_describe_query(key: str) -> ToolResult:
+            """Read the parameter schema for a registered query."""
+            current, _ = resolve(key)
+            if "read" not in current.principal.scopes:
+                raise AnalyticsError("ACCESS_DENIED")
+            return reply({"status": "OK", "key": key, "parameters_schema": schemas[key]})
+
+        if generated_tools:
+
+            class RegisteredTool(Tool):
+                query_key: str
+
+                async def run(self, arguments: dict[str, Any]) -> ToolResult:
+                    return cast(
+                        ToolResult, await run_in_threadpool(execute, self.query_key, arguments)
+                    )
+
+            for key, schema in schemas.items():
+                name = "analytics_registered_" + key
+                server.add_tool(
+                    RegisteredTool(
+                        name=name,
+                        description="Execute the registered query " + key,
+                        parameters=schema,
+                        query_key=key,
+                    )
+                )
+                generated_names.add(name)
 
         return server
 

@@ -1,8 +1,10 @@
 # Changelog
 
-## Unreleased
+## 0.5.0 — Parameterized registered queries
 
 - Add key-only MCP execution for host-registered YAML or typed queries. Add a typed SDK entry point that bypasses YAML parsing while retaining snapshot planning and authorization.
+- Bind strict runtime parameters into fixed YAML value positions and support host-owned Polars transformations over authorized projections.
+- Expose parameter schema discovery and optional generated MCP tools. Support native execution in the OS-limited worker using a host-provided transformation registry.
 
 
 ## 0.4.0 — Bounded string and fuzzy query matching

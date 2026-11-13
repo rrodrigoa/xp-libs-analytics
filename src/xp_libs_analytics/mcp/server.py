@@ -1,17 +1,34 @@
-"""Read-only resources and YAML-only tool API for standalone FastMCP 4."""
+"""MCP tools for YAML queries or host-registered query keys."""
 
 import argparse
 import json
+import re
 import threading
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from functools import wraps
 from importlib.resources import files
 from importlib.resources.abc import Traversable
 from typing import Any, cast
 from uuid import uuid4
 
-from xp_libs_analytics import AnalyticsEngine, AnalyticsError, Limits, Principal
+from xp_libs_analytics import AnalyticsEngine, AnalyticsError, AnalyticsQuery, Limits, Principal
 from xp_libs_analytics.ingest import DatasetStore
+from xp_libs_analytics.sdk import _validated_query_copy
+
+
+def _valid_query_key(key: str) -> bool:
+    return type(key) is str and re.fullmatch(r"[A-Za-z][A-Za-z0-9_-]{0,63}", key) is not None
+
+
+def _copy_registered_queries(
+    queries: Mapping[str, str | AnalyticsQuery],
+) -> dict[str, str | AnalyticsQuery]:
+    registered: dict[str, str | AnalyticsQuery] = {}
+    for key, query in queries.items():
+        if not _valid_query_key(key):
+            raise ValueError("Invalid registered query key")
+        registered[key] = query if isinstance(query, str) else _validated_query_copy(query)
+    return registered
 
 
 def create_server(
@@ -20,18 +37,26 @@ def create_server(
     uploads: bool = False,
     principal_resolver: Callable[[], Principal] | None = None,
     context_resolver: Callable[[], AnalyticsEngine] | None = None,
+    registered_queries: Mapping[str, str | AnalyticsQuery] | None = None,
 ) -> Any:
     from fastmcp import FastMCP
     from fastmcp.server.dependencies import get_context
     from fastmcp.server.middleware import Middleware
     from fastmcp.tools.base import ToolResult
 
+    if registered_queries is not None and uploads:
+        raise ValueError("Uploads are unavailable in key-only mode")
+    registered = (
+        _copy_registered_queries(registered_queries) if registered_queries is not None else None
+    )
+
     server = FastMCP(
         "Generic Analytics",
         instructions=(
-            "Read analytics://skill/generic-analytics. Discover analytics_list_datasets. "
-            "Author restricted YAML; "
-            "describe and validate before querying."
+            "Execute host-provided query keys with analytics_query_by_key."
+            if registered is not None
+            else "Read analytics://skill/generic-analytics. Discover analytics_list_datasets. "
+            "Author restricted YAML; describe and validate before querying."
         ),
     )
     limits = engine.limits if engine else Limits()
@@ -97,6 +122,8 @@ def create_server(
         "analytics_unregister_dataset": {"name": str},
         "analytics_error_info": {"code": str},
     }
+    if registered is not None:
+        tool_args = {"analytics_query_by_key": {"key": str}, "analytics_error_info": {"code": str}}
 
     class ErrorBoundary(Middleware):
         async def on_call_tool(self, context: Any, call_next: Any) -> Any:
@@ -116,6 +143,31 @@ def create_server(
                 return reply(AnalyticsError("INTERNAL_ERROR").envelope())
 
     server.add_middleware(ErrorBoundary())
+
+    @server.tool
+    @guarded
+    def analytics_error_info(code: str) -> ToolResult:
+        """Look up the exact canonical error message and repair example."""
+        return reply(AnalyticsEngine.error_info(code))
+
+    if registered is not None:
+        queries = registered
+
+        @server.tool
+        @guarded
+        def analytics_query_by_key(key: str) -> ToolResult:
+            """Execute a registered query in the authorized context."""
+            if not _valid_query_key(key):
+                raise AnalyticsError("MCP_INVALID_TOOL_CALL")
+            current = service()
+            query = queries.get(key)
+            if query is None:
+                raise AnalyticsError("ACCESS_DENIED")
+            return reply(
+                current.query_yaml(query) if isinstance(query, str) else current.query_typed(query)
+            )
+
+        return server
 
     @server.tool
     @guarded
@@ -169,12 +221,6 @@ def create_server(
         """Remove a caller-context binding; running queries retain pinned snapshots."""
         service().unregister_dataset(name)
         return reply({"status": "OK"})
-
-    @server.tool
-    @guarded
-    def analytics_error_info(code: str) -> ToolResult:
-        """Look up the exact canonical error message and repair example."""
-        return reply(AnalyticsEngine.error_info(code))
 
     bundle = files("xp_libs_analytics").joinpath("skills/generic-analytics")
     # Editable installs have resources at the repository root; wheels bundle them.

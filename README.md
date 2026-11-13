@@ -1,6 +1,6 @@
 # XP Libs Analytics
 
-A Python library for bounded, in-memory snapshot analytics over JSON records with unknown, heterogeneous schemas. Queries are restricted YAML, validated with strict Pydantic models and compiled to fixed Polars expressions. The optional standalone FastMCP adapter supplies tools, an agent skill, and 28 read-only query examples.
+A Python library for bounded, in-memory snapshot analytics over JSON records with unknown, heterogeneous schemas. The engine accepts restricted YAML and host-authored typed query definitions, then plans and executes them using fixed Polars expressions. The optional standalone FastMCP adapter supports YAML authoring or execution by registered query key.
 
 Python 3.12+ · MIT · Import: `xp_libs_analytics` · Distribution: `xp-libs-analytics`
 
@@ -132,6 +132,39 @@ xp-libs-analytics --allow-uploads # bounded local uploads
 Tools: `analytics_capabilities`, `analytics_list_datasets`, `analytics_load_json`, `analytics_describe`, `analytics_validate_query`, `analytics_explain_query`, `analytics_query`, `analytics_unregister_dataset`, `analytics_error_info`. Query tools accept `query_yaml: str`. Core imports do not load FastMCP.
 
 The local stdio server inherits its launcher's authority; one process is one local context. The default backend uses isolated workers. HTTP access fails closed unless a host supplies an authenticated `principal_resolver` and configures FastMCP transport authentication. A host-supplied `engine` deliberately selects that engine's context for local use. Hosted sessions can supply `context_resolver`, a trusted callable returning their authorized engine/context. No tool accepts a context ID or principal. The identity resolver creates distinct namespaces per authenticated principal and reapplies current field/scopes policy per request. The adapter caps cached principal contexts at 128; restarting clears local state. It is not a turnkey public multi-tenant service.
+
+### Registered query keys
+
+Hosts can expose a fixed set of queries through `create_server(registered_queries=...)`.
+The host registers the datasets and supplies the query definitions at startup.
+
+```python
+from xp_libs_analytics import AnalyticsEngine, AnalyticsQuery
+from xp_libs_analytics.mcp.server import create_server
+
+if __name__ == "__main__":
+    engine = AnalyticsEngine(isolated=True)
+    engine.register_records("observations", [{"value": 2}, {"value": 4}])
+
+    count_yaml = """version: analytics.query/v1
+dataset: {name: observations}
+aggregations: [{op: count, as: rows}]
+"""
+    sum_query = AnalyticsQuery.model_validate(
+        {
+            "version": "analytics.query/v1",
+            "dataset": {"name": "observations"},
+            "aggregations": [{"op": "sum", "field": "/value", "as": "total"}],
+        }
+    )
+
+    server = create_server(engine, registered_queries={"count": count_yaml, "sum": sum_query})
+    server.run(transport="stdio")
+```
+
+The client calls `analytics_query_by_key` with `{"key": "sum"}` and receives the standard analytics result or error. Keys are case-sensitive, start with an ASCII letter, and contain up to 64 ASCII letters, digits, underscores, or hyphens. A configured registry exposes two tools, `analytics_query_by_key` and `analytics_error_info`. The host distributes the allowed keys to clients. For HTTP, the host configures transport authentication and supplies a trusted context resolver that selects an engine with the registered datasets.
+
+YAML entries use restricted parsing on each call. Typed entries and direct SDK calls to `engine.query_typed(sum_query)` bypass the analytics YAML parser. FastMCP independently imports PyYAML for its skill provider. Both query forms resolve the current dataset snapshot and run authorization, cost planning, and execution on each request.
 
 ## Development and evidence
 

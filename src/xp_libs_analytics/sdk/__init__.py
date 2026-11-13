@@ -5,12 +5,15 @@ from __future__ import annotations
 import hashlib
 import json
 from collections.abc import Callable, Iterator
-from contextlib import contextmanager
+from contextlib import AbstractContextManager, contextmanager
 from datetime import datetime
 from pathlib import Path
 from time import monotonic
 from typing import Any
 from uuid import uuid4
+
+from pydantic import ValidationError
+from pydantic_core import PydanticSerializationError
 
 from xp_libs_analytics.engine.planner import LogicalPlan, plan_query
 from xp_libs_analytics.errors import CATALOG, AnalyticsError
@@ -18,6 +21,17 @@ from xp_libs_analytics.ingest import DatasetStore, Snapshot, utc_now
 from xp_libs_analytics.models import AGG_OPS, FILTER_OPS, AnalyticsQuery, parse_query
 from xp_libs_analytics.policy import Limits, Principal
 from xp_libs_analytics.registry import DatasetInfo, DatasetRegistry
+
+
+def _validated_query_copy(query: AnalyticsQuery) -> AnalyticsQuery:
+    if type(query) is not AnalyticsQuery:
+        raise AnalyticsError("QUERY_MALFORMED")
+    try:
+        return AnalyticsQuery.model_validate(
+            query.model_dump(by_alias=True, warnings=False), strict=True
+        )
+    except (ValidationError, PydanticSerializationError, ValueError, RecursionError):
+        raise AnalyticsError("QUERY_MALFORMED") from None
 
 
 class AnalyticsEngine:
@@ -137,7 +151,11 @@ class AnalyticsEngine:
 
     @contextmanager
     def _prepare(self, text: str) -> Iterator[tuple[LogicalPlan, Snapshot, datetime]]:
-        query = parse_query(text, self.limits)
+        with self._plan(parse_query(text, self.limits)) as prepared:
+            yield prepared
+
+    @contextmanager
+    def _plan(self, query: AnalyticsQuery) -> Iterator[tuple[LogicalPlan, Snapshot, datetime]]:
         with self.registry.snapshot(query.dataset.name) as snapshot:
             now = self.clock()
             yield plan_query(query, snapshot, self.principal, self.limits, now), snapshot, now
@@ -172,6 +190,25 @@ class AnalyticsEngine:
             self._calls.append(now)
 
     def query_yaml(self, query_yaml: str) -> dict[str, Any]:
+        return self._execute(lambda: self._prepare(query_yaml))
+
+    def query_typed(self, query: AnalyticsQuery) -> dict[str, Any]:
+        """Execute a host-authored query definition through the snapshot planner."""
+        return self._execute(lambda: self._plan(self._bounded_typed_query(query)))
+
+    def _bounded_typed_query(self, query: AnalyticsQuery) -> AnalyticsQuery:
+        validated = _validated_query_copy(query)
+        try:
+            size = len(validated.model_dump_json().encode("utf-8"))
+        except (PydanticSerializationError, UnicodeError):
+            raise AnalyticsError("QUERY_MALFORMED") from None
+        if size > self.limits.max_query_bytes:
+            raise AnalyticsError("QUERY_TOO_EXPENSIVE")
+        return validated
+
+    def _execute(
+        self, prepare: Callable[[], AbstractContextManager[tuple[LogicalPlan, Snapshot, datetime]]]
+    ) -> dict[str, Any]:
         query_id = uuid4().hex
         started = monotonic()
         event: dict[str, Any] = {
@@ -186,7 +223,7 @@ class AnalyticsEngine:
             acquired = self._slots.acquire(blocking=False)
             if not acquired:
                 raise AnalyticsError("RESOURCE_CONCURRENCY_LIMIT")
-            with self._prepare(query_yaml) as (plan, snapshot, now):
+            with prepare() as (plan, snapshot, now):
                 event["plan_fingerprint"] = plan.fingerprint
                 event["snapshot_id"] = snapshot.handle.id
                 event["snapshot_revision"] = snapshot.handle.revision

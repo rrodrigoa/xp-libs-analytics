@@ -1,6 +1,6 @@
 # Restricted YAML Query Parser — Normative Security Contract (V1)
 
-**Scope:** YAML is the only public query authoring format in V1. JSON/NDJSON records remain the analytics input, and query results/error envelopes remain JSON. This file governs YAML decoding before typed Pydantic validation. It does not permit arbitrary general-purpose YAML.
+This document defines restricted YAML decoding before typed Pydantic validation. It applies to caller-authored YAML and host-registered YAML queries. Host-authored typed queries enter through model validation. Both paths operate on snapshots of JSON or NDJSON records and return JSON results or errors.
 
 ## Decision and rationale
 

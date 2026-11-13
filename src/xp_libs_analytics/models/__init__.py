@@ -14,7 +14,6 @@ from xp_libs_analytics.matching.models import (
     Normalization,
     StringPredicate,
 )
-from xp_libs_analytics.parser import parse_yaml
 from xp_libs_analytics.policy import Limits
 
 Scalar = bool | int | float | str | None
@@ -535,6 +534,8 @@ class AnalyticsQuery(StrictModel):
 
 
 def parse_query(text: str, limits: Limits) -> AnalyticsQuery:
+    from xp_libs_analytics.parser import parse_yaml
+
     marks: dict[str, tuple[int, int]] = {}
     data = parse_yaml(text, limits, source_marks=marks)
     if data.get("version") != "analytics.query/v1":

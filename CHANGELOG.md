@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Add key-only MCP execution for host-registered YAML or typed queries. Add a typed SDK entry point that bypasses YAML parsing while retaining snapshot planning and authorization.
+
 
 ## 0.4.0 — Bounded string and fuzzy query matching
 

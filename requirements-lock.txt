@@ -74,7 +74,7 @@ keyring==25.7.0
 librt==0.16.0
 license-expression==30.4.4
 linkify-it-py==2.2.0
-markdown-it-py==4.2.0
+markdown-it-py==4.3.0
 mcp==2.3.0
 mcp-types==2.3.0
 mdit-py-plugins==0.6.1

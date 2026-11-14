@@ -65,7 +65,7 @@ joserfc==1.8.0
 jsonlines==4.0.0
 jsonpatch==1.44
 jsonpath-ng==1.16.0
-jsonpointer==3.10
+jsonpointer==3.11
 jsonref==1.1.0
 jsonschema==4.26.0
 jsonschema-path==0.5.0
